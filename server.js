@@ -339,16 +339,29 @@ app.get('/api/daily-news', async (req, res) => {
 });
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const distPath = path.join(__dirname, 'dist');
+const indexPath = path.join(distPath, 'index.html');
+
+console.log('[Server] Diagnostic - __dirname:', __dirname);
+console.log('[Server] Diagnostic - Serving static from:', distPath);
+console.log('[Server] Diagnostic - Does dist/index.html exist?', fs.existsSync(indexPath));
+
 // Serve the static files from the Vite build directory
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(distPath));
 
 // Fallback: send index.html for all other routes so React Router/PWA works
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      console.error('[Server Error] Failed to send index.html:', err.message);
+      res.status(500).send('System Error: Front Page Daily build files not found. Please verify the build step completed.');
+    }
+  });
 });
 app.listen(PORT, () => {
   console.log(`[Server] Front Page Daily API server running on http://localhost:${PORT}`);
