@@ -355,7 +355,7 @@ console.log('[Server] Diagnostic - Does dist/index.html exist?', fs.existsSync(i
 app.use(express.static(distPath));
 
 // Fallback: send index.html for all other routes so React Router/PWA works
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(indexPath, (err) => {
     if (err) {
       console.error('[Server Error] Failed to send index.html:', err.message);
