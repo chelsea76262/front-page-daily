@@ -729,3 +729,122 @@
   color: #fff;
   border-style: solid;
 }
+
+/* Stats dashboard */
+.fp-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin: 1.25rem 0;
+  width: 100%;
+}
+
+.fp-stat-box {
+  background: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 0.6rem 0.3rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.fp-stat-box:hover {
+  border-color: var(--text-ink);
+  transform: translateY(-1px);
+}
+
+.fp-stat-val {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-ink);
+  line-height: 1.2;
+}
+
+.fp-stat-lbl {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* How to Play Section */
+.fp-howtoplay-container {
+  margin: 1.25rem 0 0.5rem;
+  width: 100%;
+  border-top: 1px dashed var(--border-dashed);
+  padding-top: 1rem;
+}
+
+.fp-howtoplay-trigger {
+  background: none;
+  border: none;
+  color: var(--accent-blue);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0 auto;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.fp-howtoplay-trigger:hover {
+  background-color: var(--accent-blue-light);
+  transform: scale(1.02);
+}
+
+.fp-howtoplay-panel {
+  margin-top: 0.8rem;
+  background: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: left;
+  animation: slideDown 0.25s ease-out;
+}
+
+.fp-howtoplay-step {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.fp-howtoplay-step:last-child {
+  margin-bottom: 0;
+}
+
+.fp-howtoplay-badge {
+  background-color: var(--text-ink);
+  color: var(--bg-card);
+  font-size: 0.65rem;
+  font-weight: 800;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.fp-howtoplay-text strong {
+  color: var(--text-ink);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

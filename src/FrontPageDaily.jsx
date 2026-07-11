@@ -28,15 +28,39 @@ function NewspaperHeader({ isDarkMode, setIsDarkMode, dateString }) {
 // ----------------------------------------------------
 // 2. SCREEN A: THE LAUNCH HUB
 // ----------------------------------------------------
-function HubScreen({ difficulty, setDifficulty, onStart, onInstall, showInstallBtn }) {
+function HubScreen({ difficulty, setDifficulty, onStart, onInstall, showInstallBtn, stats }) {
+  const [showHowTo, setShowHowTo] = React.useState(false);
+
   return (
     <div className="fp-card fp-form">
       <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
-        <h2 className="fp-title-serif" style={{ marginBottom: '0.5rem' }}>Assign the Daily Budget</h2>
+        <h2 className="fp-title-serif" style={{ marginBottom: '0.5rem' }}>Start your Daily News Puzzle</h2>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
-          Repair yesterday's layout wires, check for narrative accuracy, and publish the news.
+          Audit the wire feed, unscramble daily files, and fact-check trending narratives to print today's edition.
         </p>
       </div>
+
+      {/* Stats Dashboard */}
+      {stats && stats.gamesPlayed > 0 && (
+        <div className="fp-stats-grid">
+          <div className="fp-stat-box">
+            <div className="fp-stat-val">{stats.gamesPlayed}</div>
+            <div className="fp-stat-lbl">Played</div>
+          </div>
+          <div className="fp-stat-box">
+            <div className="fp-stat-val">🔥 {stats.currentStreak}</div>
+            <div className="fp-stat-lbl">Streak</div>
+          </div>
+          <div className="fp-stat-box">
+            <div className="fp-stat-val">⭐ {stats.maxStreak}</div>
+            <div className="fp-stat-lbl">Max</div>
+          </div>
+          <div className="fp-stat-box">
+            <div className="fp-stat-val">{Math.round(stats.totalScore / stats.gamesPlayed)}</div>
+            <div className="fp-stat-lbl">Avg Pts</div>
+          </div>
+        </div>
+      )}
 
       <div className="fp-toggle-container">
         <button
@@ -63,6 +87,39 @@ function HubScreen({ difficulty, setDifficulty, onStart, onInstall, showInstallB
       >
         Enter the Wire Feed
       </button>
+
+      {/* How to Play Collapsible */}
+      <div className="fp-howtoplay-container">
+        <button
+          type="button"
+          className="fp-howtoplay-trigger"
+          onClick={() => setShowHowTo(!showHowTo)}
+        >
+          {showHowTo ? '📖 Hide Instructions' : '📖 How to Play'}
+        </button>
+        {showHowTo && (
+          <div className="fp-howtoplay-panel">
+            <div className="fp-howtoplay-step">
+              <span className="fp-howtoplay-badge">1</span>
+              <div className="fp-howtoplay-text">
+                <strong>Phase 1: Wire Keyword Feed</strong>. Fill in missing report keywords using word banks or switch to anagram letters.
+              </div>
+            </div>
+            <div className="fp-howtoplay-step">
+              <span className="fp-howtoplay-badge">2</span>
+              <div className="fp-howtoplay-text">
+                <strong>Phase 2: Fact or Fiction</strong>. Read urgent headlines and swipe or click to verify them: Fact (Right) or Fiction (Left).
+              </div>
+            </div>
+            <div className="fp-howtoplay-step">
+              <span className="fp-howtoplay-badge">3</span>
+              <div className="fp-howtoplay-text">
+                <strong>Rank & Publish</strong>. Earn points based on accuracy and speed. Rank up and share your daily scorecard!
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
       {showInstallBtn && (
         <button
@@ -733,6 +790,68 @@ export default function FrontPageDaily() {
     phase2: []
   });
 
+  // Local Storage Stats State
+  const [stats, setStats] = useState({
+    gamesPlayed: 0,
+    totalScore: 0,
+    currentStreak: 0,
+    maxStreak: 0,
+    lastPlayedDate: null,
+    scoreHistory: []
+  });
+
+  useEffect(() => {
+    const saved = localStorage.getItem('fpd_stats');
+    if (saved) {
+      try {
+        setStats(JSON.parse(saved));
+      } catch (e) {
+        console.error('Failed to parse stats:', e);
+      }
+    }
+  }, []);
+
+  const getLocalDateString = (offset = 0) => {
+    const d = new Date();
+    d.setDate(d.getDate() + offset);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const updateStatsAfterCompletion = (finalScore) => {
+    const today = getLocalDateString(0);
+    const yesterday = getLocalDateString(-1);
+    
+    setStats(prev => {
+      // Don't double-record streak increments if completed multiple times in one day
+      if (prev.lastPlayedDate === today) {
+        return prev;
+      }
+      
+      let newStreak = prev.currentStreak;
+      if (prev.lastPlayedDate === yesterday) {
+        newStreak += 1;
+      } else {
+        newStreak = 1;
+      }
+      
+      const newMaxStreak = Math.max(prev.maxStreak, newStreak);
+      const updated = {
+        gamesPlayed: prev.gamesPlayed + 1,
+        totalScore: prev.totalScore + finalScore,
+        currentStreak: newStreak,
+        maxStreak: newMaxStreak,
+        lastPlayedDate: today,
+        scoreHistory: [...(prev.scoreHistory || []), finalScore]
+      };
+      
+      localStorage.setItem('fpd_stats', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
   // Listen to PWA installation events
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
@@ -811,6 +930,7 @@ export default function FrontPageDaily() {
   };
 
   const handlePhase2Complete = () => {
+    updateStatsAfterCompletion(globalScore);
     setCurrentScreen('SUMMARY');
   };
 
@@ -852,6 +972,7 @@ export default function FrontPageDaily() {
           onStart={() => setCurrentScreen('PHASE_1')}
           onInstall={handleInstallClick}
           showInstallBtn={!!deferredPrompt}
+          stats={stats}
         />
       )}
 
