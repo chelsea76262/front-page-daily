@@ -273,7 +273,7 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
     }
   };
 
-  const showEasyAnagramLayout = difficulty === 'EASY' || p1HintUsed || hasRevealed;
+  const showMultipleChoiceLayout = difficulty === 'EASY' || p1HintUsed;
 
   return (
     <div className={`fp-card ${shake ? 'shake-card' : ''}`}>
@@ -300,8 +300,8 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
 
       {p1CardState === 'PLAYING' ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          {!showEasyAnagramLayout ? (
-            // Hard Deductor Layout
+          {showMultipleChoiceLayout ? (
+            // Easy Mode: Multiple Choice (Word Bank) Layout
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div className="fp-wire-snippet">
                 "{currentStory.wireSnippet}"
@@ -323,13 +323,11 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
                 })}
               </div>
               <div className="fp-action-row">
-                <button
-                  type="button"
-                  onClick={() => setP1HintUsed(true)}
-                  className="fp-hint-link"
-                >
-                  💡 Swap to anagram (-10 pts)
-                </button>
+                {difficulty === 'HARD' && p1HintUsed && (
+                  <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                    💡 Multiple Choice active (-10 pts swap penalty)
+                  </span>
+                )}
                 <button
                   type="button"
                   onClick={handleReveal}
@@ -341,7 +339,7 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
               </div>
             </div>
           ) : (
-            // Easy Anagram Layout
+            // Hard Mode: Anagram (Scrambled Letters) Layout
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -391,28 +389,44 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
                   File
                 </button>
               </div>
+              
               <div className="fp-action-row" style={{ marginTop: '0rem' }}>
-                {p1HintUsed && !hasRevealed && (
-                  <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                    💡 Anagram mode active (Hint Penalty)
-                  </span>
-                )}
-                
                 {!hasRevealed && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (easyHintStage === 0) setEasyHintStage(1);
-                      else if (easyHintStage === 1) setEasyHintStage(2);
-                      else if (easyHintStage === 2) handleReveal();
-                    }}
-                    className="fp-hint-link"
-                    style={easyHintStage === 2 ? { color: 'var(--accent-red)' } : {}}
-                  >
-                    {easyHintStage === 0 && "💡 Request Hint #1 (First Letter)"}
-                    {easyHintStage === 1 && "💡 Request Hint #2 (Definition)"}
-                    {easyHintStage === 2 && "🔓 Reveal Answer (0 pts)"}
-                  </button>
+                  <>
+                    {easyHintStage === 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setEasyHintStage(1)}
+                        className="fp-hint-link"
+                      >
+                        💡 Get letter hint (-5 pts)
+                      </button>
+                    )}
+                    {easyHintStage === 1 && (
+                      <button
+                        type="button"
+                        onClick={() => setEasyHintStage(2)}
+                        className="fp-hint-link"
+                      >
+                        💡 Get definition (-10 pts)
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setP1HintUsed(true)}
+                      className="fp-hint-link"
+                    >
+                      💡 Swap to Multiple Choice (-10 pts)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleReveal}
+                      className="fp-hint-link"
+                      style={{ color: 'var(--accent-red)' }}
+                    >
+                      🔓 Reveal (0 pts)
+                    </button>
+                  </>
                 )}
               </div>
             </form>
