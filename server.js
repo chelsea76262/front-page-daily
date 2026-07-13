@@ -246,7 +246,7 @@ const PHASE2_POOL = [
   },
   {
     category: "History / Military",
-    headline: "In 2007, a company of Swiss soldiers armed with assault rifles accidentally invaded the neighboring country of Liechtenstein during a midnight march in a rainstorm.",
+    headline: "In 2007, a company of Swiss Swiss soldiers armed with assault rifles accidentally invaded the neighboring country of Liechtenstein during a midnight march in a rainstorm.",
     isFact: true,
     revealText: "FACT! A Swiss infantry unit got lost in the dark and marched 1.2 miles into Liechtenstein. The Swiss army apologized, and Liechtenstein officials joked they didn't notice the invasion.",
     tagline: "🇨🇭 Swiss Precision at Its Finest."
@@ -256,7 +256,7 @@ const PHASE2_POOL = [
     headline: "Because of thermal expansion during hot summer months, the Eiffel Tower can grow up to 15 centimeters (6 inches) taller than its winter height.",
     isFact: true,
     revealText: "FACT! As iron absorbs heat, it expands. This thermal expansion causes the Eiffel Tower to grow taller in the summer and tilt slightly away from the sun.",
-    tagline: "🗼 Summer growth spurt!"
+    tagline: "🗼 Eiffel Tower summer growth spurt!"
   },
   {
     category: "Conspiracy / Satire",
@@ -278,6 +278,90 @@ const PHASE2_POOL = [
     isFact: true,
     revealText: "FACT! 'Old Tjikko' in Sweden is a clonal tree that has kept itself alive by growing new trunks from the same root system for 9,550 years, making it the oldest clone tree.",
     tagline: "🌲 Rooted in prehistory."
+  },
+  {
+    category: "Animals / Politics",
+    headline: "In 1997, a historic town in Alaska elected a cat named Stubbs as its honorary mayor, who successfully held office for 20 years.",
+    isFact: true,
+    revealText: "FACT! Stubbs the cat was the honorary mayor of Talkeetna, Alaska. He was a major tourist attraction and famously drank catnip-laced water out of wine glasses daily.",
+    tagline: "🐱 Mayor Stubbs at your service!"
+  },
+  {
+    category: "Geography / Fun",
+    headline: "The country of Colombia has a themed amusement park built on a former drug lord's estate, where wild African hippos roam freely in the lakes.",
+    isFact: true,
+    revealText: "FACT! Hacienda Nápoles, formerly owned by Pablo Escobar, was converted into a theme park. The hippos he originally imported escaped, multiplied, and now live in the local waterways.",
+    tagline: "🦛 Hippos on holiday!"
+  },
+  {
+    category: "Nature / Travel",
+    headline: "To reduce municipal tourist confusion, the city of Venice, Italy, trained a squad of service ducks to guide lost gondoliers through the canals at night.",
+    isFact: false,
+    revealText: "FICTION! Venice does not use service ducks for canal navigation. While Venice has plenty of waterfowl, gondoliers rely on their own stellar memory and GPS.",
+    tagline: "🦆 A quack navigation myth."
+  },
+  {
+    category: "Wildlife / Funny",
+    headline: "Responding to emergency calls about a 'screaming woman' in the woods, New Hampshire police discovered a very loud goat protesting for its breakfast.",
+    isFact: true,
+    revealText: "FACT! Responding officers searched the woods and found a goat tied to a fence, screaming at the top of its lungs because its morning feed was running late.",
+    tagline: "🐐 Yelling for pancakes."
+  },
+  {
+    category: "Pop Culture / Records",
+    headline: "A teenager legally changed his name to 'Captain Fantastic Faster Than A Speeding Bullet Colder Than Ice' to beat a record, causing his grandmother to refuse to speak to him.",
+    isFact: true,
+    revealText: "FACT! George Garratt, 19, changed his name to the 19-word superhero title in 2008. His grandmother found it so ridiculous she stopped talking to him.",
+    tagline: "🦸‍♂️ Captain Grandson."
+  },
+  {
+    category: "Animals / Science",
+    headline: "A group of dairy farmers in Scotland successfully trained their cows to moo with a French accent after playing classical French music for a year.",
+    isFact: false,
+    revealText: "FICTION! Cows cannot be taught accents or foreign languages, though scientists joke that herds have slightly different vocal ranges depending on their regions.",
+    tagline: "🐮 Le Moo."
+  },
+  {
+    category: "Design / Pop Culture",
+    headline: "An artist group in Sweden built a miniature shopping street designed exclusively for mice, complete with a tiny record shop, bakery, and cinema.",
+    isFact: true,
+    revealText: "FACT! An artist collective called AnonyMouse built highly detailed, street-level mouse installations in Malmö, Sweden, showcasing tiny menus and movie posters.",
+    tagline: "🐭 Shopping for cheese!"
+  },
+  {
+    category: "Safety / Community",
+    headline: "The town of Churchill, Manitoba, enforces a rule requiring residents to leave their car doors unlocked to serve as emergency shelters for pedestrians escaping polar bears.",
+    isFact: true,
+    revealText: "FACT! Churchill is in polar bear country. Unlocked car doors are a community safety measure to ensure pedestrians always have a quick place to hide.",
+    tagline: "🐻 Bear-proof backup plans."
+  },
+  {
+    category: "Folklore / Tech",
+    headline: "The government of Iceland employs a full-time 'Elf Whisperer' to negotiate road construction routes with hidden elf spirits.",
+    isFact: false,
+    revealText: "FICTION! While Iceland has a road construction policy that respects traditional elf heritage sites, they do not have a formal government role called 'Elf Whisperer'.",
+    tagline: "🧝‍♂️ Spirit of construction."
+  },
+  {
+    category: "Science / Music",
+    headline: "A study confirmed that dairy cows produce 3% more milk when listening to relaxing classical music like Beethoven's 'Pastoral Symphony'.",
+    isFact: true,
+    revealText: "FACT! Research by the University of Leicester found that relaxing classical music reduces stress in cows, which physically triggers higher milk yields.",
+    tagline: "🎼 Symphony of the cows."
+  },
+  {
+    category: "Nature / Animals",
+    headline: "Wombat feces are cube-shaped, which naturally prevents them from rolling away and allows wombats to stack them to mark territory.",
+    isFact: true,
+    revealText: "FACT! Wombats are the only known animals that produce cube-shaped feces. The flat sides of the cubes prevent the droppings from rolling off rocks and logs.",
+    tagline: "💩 Architectural digestion."
+  },
+  {
+    category: "Animals / Biology",
+    headline: "Sea otters hold hands while sleeping to recharge their internal static electricity grids and stay warm.",
+    isFact: false,
+    revealText: "FICTION! Sea otters hold hands (a behavior called 'rafting') to keep from drifting apart in the water current while asleep, not for electrical recharging!",
+    tagline: "🦦 Floating hand-in-hand."
   }
 ];
 
@@ -385,6 +469,31 @@ function shuffleArray(array) {
   return arr;
 }
 
+function getDailyPhase2(pool) {
+  const date = new Date();
+  const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  
+  // Seeded selection
+  let hash = 0;
+  for (let i = 0; i < dateKey.length; i++) {
+    hash = dateKey.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  
+  const selected = [];
+  const poolCopy = [...pool];
+  
+  // Pick 3 items using the hash
+  for (let j = 0; j < 3; j++) {
+    const index = Math.abs(hash + j * 7) % poolCopy.length;
+    selected.push(poolCopy.splice(index, 1)[0]);
+  }
+  
+  return selected.map((item, idx) => ({
+    id: idx + 1,
+    ...item
+  }));
+}
+
 // ----------------------------------------------------
 // 3. API ENDPOINT ROUTING
 // ----------------------------------------------------
@@ -478,11 +587,8 @@ app.get('/api/daily-news', async (req, res) => {
       }
     }
     
-    // Shuffle and pick 3 Phase 2 Fact/Fiction items from the pool
-    const selectedPhase2 = shuffleArray(PHASE2_POOL).slice(0, 3).map((item, idx) => ({
-      id: idx + 1,
-      ...item
-    }));
+    // Pick 3 Phase 2 Fact/Fiction items based on daily calendar seed
+    const selectedPhase2 = getDailyPhase2(PHASE2_POOL);
     
     const dateString = new Date().toLocaleDateString('en-US', {
       month: 'long',
@@ -508,10 +614,7 @@ app.get('/api/daily-news', async (req, res) => {
     res.json({
       dateString,
       phase1: targetFallback,
-      phase2: shuffleArray(PHASE2_POOL).slice(0, 3).map((item, idx) => ({
-        id: idx + 1,
-        ...item
-      }))
+      phase2: getDailyPhase2(PHASE2_POOL)
     });
   }
 });

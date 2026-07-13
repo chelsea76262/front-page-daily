@@ -697,7 +697,7 @@ function AuditScreen({ phase2Data, onChoiceComplete, onPhaseComplete }) {
 // ----------------------------------------------------
 // 5. SCREEN D: UNIFIED SCORE SUMMARY
 // ----------------------------------------------------
-function SummaryScreen({ dateString, globalScore, performanceLog, onReset, stats }) {
+function SummaryScreen({ dateString, globalScore, performanceLog, onReset, stats, setSelectedCategory }) {
   const [animatedScore, setAnimatedScore] = useState(0);
   const [showToast, setShowToast] = useState(false);
 
@@ -832,6 +832,59 @@ Play at Front Page Daily!`;
         >
           Reset Board
         </button>
+      </div>
+
+      {/* Play Another Edition */}
+      <div style={{ borderTop: '1px dashed var(--border-dashed)', paddingTop: '1rem', marginTop: '1rem' }}>
+        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.6rem' }}>
+          Play Another Edition
+        </span>
+        <div className="fp-category-grid" style={{ marginTop: '0.5rem', marginBottom: '0rem' }}>
+          <div
+            className="fp-category-card"
+            style={{ padding: '0.6rem 0.3rem' }}
+            onClick={() => {
+              setSelectedCategory('world');
+              onReset();
+            }}
+          >
+            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🌍</span>
+            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Headline News</span>
+          </div>
+          <div
+            className="fp-category-card"
+            style={{ padding: '0.6rem 0.3rem' }}
+            onClick={() => {
+              setSelectedCategory('popculture');
+              onReset();
+            }}
+          >
+            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🎬</span>
+            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Pop Culture</span>
+          </div>
+          <div
+            className="fp-category-card"
+            style={{ padding: '0.6rem 0.3rem' }}
+            onClick={() => {
+              setSelectedCategory('sports');
+              onReset();
+            }}
+          >
+            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🏆</span>
+            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Sports</span>
+          </div>
+          <div
+            className="fp-category-card"
+            style={{ padding: '0.6rem 0.3rem' }}
+            onClick={() => {
+              setSelectedCategory('technology');
+              onReset();
+            }}
+          >
+            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>💻</span>
+            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Tech & Science</span>
+          </div>
+        </div>
       </div>
 
       {showToast && (
@@ -1080,6 +1133,7 @@ export default function FrontPageDaily() {
           performanceLog={performanceLog}
           onReset={resetGame}
           stats={stats}
+          setSelectedCategory={setSelectedCategory}
         />
       )}
     </div>
