@@ -28,7 +28,7 @@ function NewspaperHeader({ isDarkMode, setIsDarkMode, dateString }) {
 // ----------------------------------------------------
 // 2. SCREEN A: THE LAUNCH HUB
 // ----------------------------------------------------
-function HubScreen({ difficulty, setDifficulty, onStart, onInstall, showInstallBtn, stats }) {
+function HubScreen({ difficulty, setDifficulty, onStart, onInstall, showInstallBtn, stats, selectedCategory, setSelectedCategory }) {
   const [showHowTo, setShowHowTo] = React.useState(false);
 
   return (
@@ -61,6 +61,43 @@ function HubScreen({ difficulty, setDifficulty, onStart, onInstall, showInstallB
           </div>
         </div>
       )}
+
+      {/* Category Grid */}
+      <div style={{ borderTop: '1px dashed var(--border-dashed)', paddingTop: '0.85rem' }}>
+        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', textAlign: 'center', marginBottom: '0.5rem' }}>
+          Select News Edition
+        </span>
+        <div className="fp-category-grid">
+          <div
+            className={`fp-category-card ${selectedCategory === 'world' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('world')}
+          >
+            <span className="fp-category-icon">🌍</span>
+            <span className="fp-category-label">Headline News</span>
+          </div>
+          <div
+            className={`fp-category-card ${selectedCategory === 'popculture' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('popculture')}
+          >
+            <span className="fp-category-icon">🎬</span>
+            <span className="fp-category-label">Pop Culture</span>
+          </div>
+          <div
+            className={`fp-category-card ${selectedCategory === 'sports' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('sports')}
+          >
+            <span className="fp-category-icon">🏆</span>
+            <span className="fp-category-label">Sports</span>
+          </div>
+          <div
+            className={`fp-category-card ${selectedCategory === 'technology' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('technology')}
+          >
+            <span className="fp-category-icon">💻</span>
+            <span className="fp-category-label">Tech & Science</span>
+          </div>
+        </div>
+      </div>
 
       <div className="fp-toggle-container">
         <button
@@ -800,6 +837,7 @@ export default function FrontPageDaily() {
   const [isLoading, setIsLoading] = useState(true);
   const [apiError, setApiError] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('world');
   
   const [currentScreen, setCurrentScreen] = useState('HUB'); // 'HUB', 'PHASE_1', 'PHASE_2', 'SUMMARY'
   const [difficulty, setDifficulty] = useState('HARD'); // 'EASY', 'HARD'
@@ -888,12 +926,13 @@ export default function FrontPageDaily() {
     return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   }, []);
 
-  // Fetch live daily news on mount
+  // Fetch live daily news when selectedCategory changes
   useEffect(() => {
     let active = true;
     setIsLoading(true);
+    setApiError(false);
     
-    fetch('/api/daily-news')
+    fetch(`/api/daily-news?category=${selectedCategory}`)
       .then((res) => {
         if (!res.ok) throw new Error('Network response not ok');
         return res.json();
@@ -905,7 +944,7 @@ export default function FrontPageDaily() {
         }
       })
       .catch((err) => {
-        console.warn('[PWA] Live daily-news API offline or unreachable. Loading local draft:', err);
+        console.warn(`[PWA] Live daily-news API offline or unreachable for category: ${selectedCategory}. Loading local draft:`, err);
         if (active) {
           setGameData(DAILY_GAME_DATA);
           setApiError(true);
@@ -916,7 +955,7 @@ export default function FrontPageDaily() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [selectedCategory]);
 
   const handleInstallClick = () => {
     if (!deferredPrompt) return;
@@ -999,6 +1038,8 @@ export default function FrontPageDaily() {
           onInstall={handleInstallClick}
           showInstallBtn={!!deferredPrompt}
           stats={stats}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
         />
       )}
 

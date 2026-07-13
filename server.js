@@ -23,43 +23,202 @@ const FALLBACK_PHASE1 = [
   },
   {
     id: 2,
-    category: "Science & Tech",
-    headlineTemplate: "SCIENTISTS USE AI TO MAP NEW ______ WITH ZERO COGNITIVE RESISTANCE PARADIGM",
-    targetWord: "MATERIALS",
-    scrambled: "LMAETIRAS",
-    definition: "Substances or components used to build or manufacture products.",
-    wireSnippet: "Materials research reached a historic milestone this morning. Computational neural networks successfully projected two structural configurations optimized for lossless electrical grids.",
-    wordBank: ["MATERIALS", "BATTERIES", "ALGORITHMS", "SATELLITES", "POLYMERS"]
+    category: "Global News",
+    headlineTemplate: "HUMANITARIAN CRISIS DEEPENS IN ______ AS AID CONVOYS ENCOUNTER INTENSE RESISTANCE",
+    targetWord: "YEMEN",
+    scrambled: "NMYEE",
+    definition: "A country in Western Asia, at the southern end of the Arabian Peninsula.",
+    wireSnippet: "Distributing food and medical supplies has become highly dangerous. Local humanitarian networks reported blocked trade ports and highway security incidents.",
+    wordBank: ["YEMEN", "SUDAN", "SOMALIA", "SYRIA", "LIBYA"]
   },
   {
     id: 3,
-    category: "Finance & Business",
-    headlineTemplate: "GLOBAL CHIP SUPPLY SURGES BY 40% AS NEW ______ FACTORIES REACH PEAK OUTPUT",
-    targetWord: "SEMICONDUCTOR",
-    scrambled: "CMITRSDNEUCOO",
-    definition: "A solid substance that has a conductivity between that of an insulator and that of most metals.",
-    wireSnippet: "Tech manufacturers are reporting record-high inventories this quarter. The massive semiconductor fabrication complexes in Phoenix and Hsinchu have exceeded projections.",
-    wordBank: ["SEMICONDUCTOR", "AUTOMOTIVE", "LITHOGRAPH", "TELECOM", "AEROSPACE"]
+    category: "Global News",
+    headlineTemplate: "UNITED NATIONS ASSEMBLES EMERGENCY CONVENTION ON TRANS-NATIONAL ______ POLICIES",
+    targetWord: "BORDER",
+    scrambled: "DRERBO",
+    definition: "A line separating two political or geographical areas, especially countries.",
+    wireSnippet: "Delegates from over forty nations will meet in Geneva next week. The agenda focuses on standardizing asylum request flows and reducing maritime friction.",
+    wordBank: ["BORDER", "TARIFF", "DEFENSE", "TRAVEL", "SECURITY"]
   },
   {
     id: 4,
-    category: "Climate & Enviro",
-    headlineTemplate: "AMAZON RAINFOREST SEEKS LEGAL PERSONHOOD STATUS TO BLANKET STATE FROM ______",
-    targetWord: "DEFORESTATION",
-    scrambled: "FROTSITADENEO",
-    definition: "The action of clearing a wide area of trees.",
-    wireSnippet: "Environmental advocates filed a landmark petition in Brazil's high courts. They argue that declaring the forest a legal entity will automatically criminalize illegal logging and land clearing.",
-    wordBank: ["DEFORESTATION", "AGRICULTURE", "DEVELOPMENT", "URBANIZATION", "POLLUTION"]
+    category: "Global News",
+    headlineTemplate: "DIPLOMATS ANNOUNCE COORDINATED ECONOMIC ______ AGAINST REBEL FORCES EXPORT ASSETS",
+    targetWord: "SANCTIONS",
+    scrambled: "NNSCSAOIT",
+    definition: "A threatened penalty for disobeying a law or rule, especially trade restrictions.",
+    wireSnippet: "The allied coalition has frozen overseas bank accounts linked to military procurement. New restrictions target regional steel production and raw fuel logistics.",
+    wordBank: ["SANCTIONS", "COMMERCE", "EMBARGO", "TARIFFS", "PENALTIES"]
   },
   {
     id: 5,
-    category: "Health & Biotech",
-    headlineTemplate: "NEW LAB-GROWN INTERFERON INJECTIONS REVERSE AGE-RELATED ______ IN CLINICAL TRIALS",
-    targetWord: "BLINDNESS",
-    scrambled: "LNESBNDIS",
-    definition: "The state or condition of being unable to see due to physiological or neurological factors.",
-    wireSnippet: "A breakthrough cellular therapy has restored vision in aging canines. The treatment targets macular degeneration by regenerating photoreceptor cells directly in the retina.",
-    wordBank: ["BLINDNESS", "DEAFNESS", "DEMENTIA", "ARTHRITIS", "DIABETES"]
+    category: "Global News",
+    headlineTemplate: "PRIME MINISTER CALLS FOR AN IMMEDIATE NATIONWIDE ______ AHEAD OF SCHEDULED TALKS",
+    targetWord: "ELECTION",
+    scrambled: "TEONCLIE",
+    definition: "A formal and organized choice by vote of a person for a political office.",
+    wireSnippet: "A snap parliamentary ballot has been projected for early autumn. Opposing coalitions have already launched candidate campaigns in key swing districts.",
+    wordBank: ["ELECTION", "COALITION", "REFUND", "DISPUTE", "CAMPAIGN"]
+  }
+];
+
+const FALLBACK_POPCULTURE = [
+  {
+    id: 1,
+    category: "Pop Culture",
+    headlineTemplate: "DIRECTOR REVEALS PLANS FOR LATEST ______ EPIC AFTER DRAMATIC STUDIO BIDDING WAR",
+    targetWord: "HOLLYWOOD",
+    scrambled: "DOWYHOOLL",
+    definition: "A neighborhood in Los Angeles, California, synonymous with the American film industry.",
+    wireSnippet: "The visionary filmmaker announced their highly anticipated sci-fi project today. Two major studios fought for the rights before a record-breaking deal was signed.",
+    wordBank: ["HOLLYWOOD", "BROADWAY", "SUNDANCE", "FESTIVAL", "CANNES"]
+  },
+  {
+    id: 2,
+    category: "Pop Culture",
+    headlineTemplate: "POP STAR DOMINATES THE ______ NOMINATIONS WITH SIX CATEGORY RECOGNITIONS",
+    targetWord: "GRAMMYS",
+    scrambled: "YSMGRMA",
+    definition: "An award presented by the Recording Academy to recognize outstanding achievement in the music industry.",
+    wireSnippet: "The recording academy released the list of nominees this morning. The chart-topping singer is poised to sweep the major awards next month.",
+    wordBank: ["GRAMMYS", "OSCARS", "EMMYS", "TONYS", "BAFTAS"]
+  },
+  {
+    id: 3,
+    category: "Pop Culture",
+    headlineTemplate: "SUPERHERO BLOCKBUSTER BREAKS ALL-TIME ______ OFFICE RECORDS IN OPENING WEEKEND",
+    targetWord: "BOX",
+    scrambled: "XO",
+    definition: "A container or device, or a reference to theater ticket sales.",
+    wireSnippet: "The latest comic book adaptation generated over $200 million domestically. Theater chains report unprecedented attendance and sold-out showings nationwide.",
+    wordBank: ["BOX", "TICKET", "SCREEN", "STAGE", "PRESS"]
+  },
+  {
+    id: 4,
+    category: "Pop Culture",
+    headlineTemplate: "LEGENDARY ROCK BAND ANNOUNCES GLOBAL CO-HEADLINING ______ DISMISSING RUMORS",
+    targetWord: "STADIUM",
+    scrambled: "MDIUTSA",
+    definition: "A large closed area of land used for sports or musical performances.",
+    wireSnippet: "The rock veterans surprised fans with a 40-city stadium route announcement. Representatives confirmed that recent internal disputes have been fully resolved.",
+    wordBank: ["STADIUM", "THEATER", "FESTIVAL", "REUNION", "RELEASE"]
+  },
+  {
+    id: 5,
+    category: "Pop Culture",
+    headlineTemplate: "CELEBRITY FASHION LINE COLLAPSES AFTER HIGH-PROFILE DESIGNS GO ______ ON SOCIALS",
+    targetWord: "VIRAL",
+    scrambled: "LRIVA",
+    definition: "Image, video, piece of information, etc., that is circulated rapidly and widely from one internet user to another.",
+    wireSnippet: "The designer's collection received intense criticism for lack of original styling. Memes and parodies spread across platforms within hours of the runway reveal.",
+    wordBank: ["VIRAL", "TRENDY", "CLONE", "FAMOUS", "ONLINE"]
+  }
+];
+
+const FALLBACK_SPORTS = [
+  {
+    id: 1,
+    category: "Sports",
+    headlineTemplate: "UNDERDOG TEAM SECURES HISTORIC CHAMPIONSHIP WIN IN EXTRA ______ TIME",
+    targetWord: "PLAYOFF",
+    scrambled: "FYOPFAL",
+    definition: "An additional game, match, or series played to determine a winner.",
+    wireSnippet: "A late goal in extra time sealed the historic victory. The stadium erupted as the underdog team lifted the European cup.",
+    wordBank: ["PLAYOFF", "TIMEOUT", "HALFTIME", "QUARTER", "FINALS"]
+  },
+  {
+    id: 2,
+    category: "Sports",
+    headlineTemplate: "ATHLETES PREPARE FOR SUMMER ______ INDOOR AND OUTDOOR TRACK HEATS",
+    targetWord: "OLYMPICS",
+    scrambled: "LPOIMSICY",
+    definition: "A modern international sports event held every four years, with Summer and Winter games.",
+    wireSnippet: "Competitors from over 190 countries have checked into the athlete village. Security and logistics teams report full readiness for the opening ceremony.",
+    wordBank: ["OLYMPICS", "ATHLETICS", "MARATHON", "TRIATHLON", "REGATTA"]
+  },
+  {
+    id: 3,
+    category: "Sports",
+    headlineTemplate: "STAR QUARTERBACK SIGNS RECORD-BREAKING FIVE-YEAR ______ WORTH $250 MILLION",
+    targetWord: "CONTRACT",
+    scrambled: "TORTCNAC",
+    definition: "A written or spoken agreement, especially one concerning employment, sales, or tenancy.",
+    wireSnippet: "The franchise secured their star player long-term today. The deal includes full guarantees and signing bonuses that reset the market.",
+    wordBank: ["CONTRACT", "EXTENSION", "TRANSFER", "SALARY", "RELEASE"]
+  },
+  {
+    id: 4,
+    category: "Sports",
+    headlineTemplate: "CYCLING CHAMPION STRIPPED OF MEDAL FOLLOWING REVEALING DISCLOSURES IN ______ AUDITS",
+    targetWord: "DOPING",
+    scrambled: "GPNODI",
+    definition: "The administration of drugs to an athlete to improve their performance.",
+    wireSnippet: "Anti-doping regulators announced the suspension this morning. The re-tested biological samples from last summer's tour revealed trace amounts of banned steroids.",
+    wordBank: ["DOPING", "TESTING", "MEDICAL", "ROSTER", "RECORD"]
+  },
+  {
+    id: 5,
+    category: "Sports",
+    headlineTemplate: "FORMULA ONE DRIVER DOMINATES THE RAIN-SLICKED MONACO ______ START TO FINISH",
+    targetWord: "GRAND",
+    scrambled: "AGRND",
+    definition: "Magnificent and imposing in appearance, size, or style; or part of a major race name.",
+    wireSnippet: "Perfect tire strategy and masterclass wet-weather driving sealed the win. The reigning champion led all 78 laps in challenging conditions.",
+    wordBank: ["GRAND", "CIRCUIT", "TROPHY", "PODIUM", "CHALLENGE"]
+  }
+];
+
+const FALLBACK_TECHNOLOGY = [
+  {
+    id: 1,
+    category: "Tech & Science",
+    headlineTemplate: "RESEARCHERS DEVELOP BIO-COMPATIBLE ______ CHIPS THAT INTEGRATE WITH LIVING TISSUE",
+    targetWord: "SILICON",
+    scrambled: "NILOSCI",
+    definition: "A chemical element used widely in semiconductor devices and microchips.",
+    wireSnippet: "The bio-hybrid interface represents a major leap in neural engineering. Microscopic electrodes successfully monitored neural firing rates without triggering immune responses.",
+    wordBank: ["SILICON", "GRAPHENE", "POLYMER", "METALLIC", "CELLULAR"]
+  },
+  {
+    id: 2,
+    category: "Tech & Science",
+    headlineTemplate: "TECH GIANT ANNOUNCES CHATBOT INTEGRATED WITH DYNAMIC ______ VOICE AGENTS",
+    targetWord: "ARTIFICIAL",
+    scrambled: "TAFCIARILI",
+    definition: "Made or produced by human beings rather than occurring naturally, typically as a copy of something natural.",
+    wireSnippet: "The new speech synthesis engine produces human-like inflection and conversational pauses, blurring the line between automated support and genuine human dialogue.",
+    wordBank: ["ARTIFICIAL", "SYNTHETIC", "VIRTUAL", "AUTOMATED", "ROBOTIC"]
+  },
+  {
+    id: 3,
+    category: "Tech & Science",
+    headlineTemplate: "QUANTUM COMPUTER SHATTERS TRADITIONAL ______ ENCRYPTION PROTOCOLS IN SECONDS",
+    targetWord: "SECURITY",
+    scrambled: "TCYERUSI",
+    definition: "The state of being free from danger or threat; or protection of digital assets.",
+    wireSnippet: "Cybersecurity agencies have issued urgent updates. The 1000-qubit processor solved the factoring algorithm that protects modern web traffic in under four seconds.",
+    wordBank: ["SECURITY", "PASSWORD", "DATABASE", "FIREWALL", "NETWORK"]
+  },
+  {
+    id: 4,
+    category: "Tech & Science",
+    headlineTemplate: "ASTRONOMERS INTERCEPT REPETITIVE FAST RADIO ______ ORIGINATING IN DEEP SPACE",
+    targetWord: "BURSTS",
+    scrambled: "SRTSUB",
+    definition: "An instance of breaking open or flying apart suddenly; or short signals.",
+    wireSnippet: "The deep space signal is repeating every 16 days with millisecond precision. Scientists are ruling out cosmic noise in favor of a magnetized neutron star magnetar.",
+    wordBank: ["BURSTS", "WAVES", "ECHOES", "PULSES", "BEAMS"]
+  },
+  {
+    id: 5,
+    category: "Tech & Science",
+    headlineTemplate: "ELECTRIC VEHICLE MANUFACTURER DEPLOYS SOLID-STATE ______ WITH 800-MILE RANGE",
+    targetWord: "BATTERY",
+    scrambled: "TTEYBAM",
+    definition: "A container consisting of one or more cells, in which chemical energy is converted into electricity and used as a source of power.",
+    wireSnippet: "The new energy density metric outperforms modern lithium-ion packs by double. Mass production lines are breaking ground in Ohio this summer.",
+    wordBank: ["BATTERY", "CHARGER", "MOTOR", "ENGINE", "TURBINE"]
   }
 ];
 
@@ -230,11 +389,31 @@ function shuffleArray(array) {
 // 3. API ENDPOINT ROUTING
 // ----------------------------------------------------
 app.get('/api/daily-news', async (req, res) => {
+  const categoryParam = req.query.category || 'world';
+  
+  let rssUrl = 'http://feeds.bbci.co.uk/news/world/rss.xml';
+  let targetFallback = FALLBACK_PHASE1;
+  let displayCategory = "Global News";
+  
+  if (categoryParam === 'popculture') {
+    rssUrl = 'http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml';
+    targetFallback = FALLBACK_POPCULTURE;
+    displayCategory = "Pop Culture";
+  } else if (categoryParam === 'sports') {
+    rssUrl = 'http://feeds.bbci.co.uk/sport/rss.xml';
+    targetFallback = FALLBACK_SPORTS;
+    displayCategory = "Sports";
+  } else if (categoryParam === 'technology') {
+    rssUrl = 'http://feeds.bbci.co.uk/news/technology/rss.xml';
+    targetFallback = FALLBACK_TECHNOLOGY;
+    displayCategory = "Tech & Science";
+  }
+
   try {
-    console.log('[API] Fetching live headlines from BBC RSS Feed');
+    console.log(`[API] Fetching live headlines from ${categoryParam} RSS Feed: ${rssUrl}`);
     
-    // BBC World News RSS converted to JSON via free public converter
-    const feedUrl = 'https://api.rss2json.com/v1/api.json?rss_url=http://feeds.bbci.co.uk/news/world/rss.xml';
+    // BBC News RSS converted to JSON via free public converter
+    const feedUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
     const feedRes = await fetch(feedUrl);
     
     if (!feedRes.ok) {
@@ -249,7 +428,7 @@ app.get('/api/daily-news', async (req, res) => {
     
     console.log('[API] Extracting wire templates and compiling definitions');
     const phase1 = [];
-    const itemsToProcess = feedData.items.slice(0, 8); // look at top 8 to get 5 clean ones
+    const itemsToProcess = feedData.items.slice(0, 10); // look at top 10 to get 5 clean ones
     
     for (const article of itemsToProcess) {
       if (phase1.length >= 5) break;
@@ -258,7 +437,7 @@ app.get('/api/daily-news', async (req, res) => {
       const desc = article.description || article.content || "Details logged in the morning dispatch.";
       
       // Clean title from basic noise
-      if (title.toLowerCase().includes('in pictures') || title.toLowerCase().includes('video:')) {
+      if (title.toLowerCase().includes('in pictures') || title.toLowerCase().includes('video:') || title.toLowerCase().includes('pictures:')) {
         continue; 
       }
       
@@ -278,7 +457,7 @@ app.get('/api/daily-news', async (req, res) => {
       
       phase1.push({
         id: phase1.length + 1,
-        category: article.categories?.[0] || "Global News",
+        category: displayCategory,
         headlineTemplate: template,
         targetWord: target,
         scrambled: scrambled,
@@ -290,10 +469,10 @@ app.get('/api/daily-news', async (req, res) => {
     
     // If we failed to get 5 live items, fill remaining items with fallback data
     if (phase1.length < 5) {
-      console.log('[API] Live items count below 5. Filling with fallback items.');
+      console.log(`[API] Live items count below 5 (${phase1.length}). Filling with category fallback items.`);
       const diff = 5 - phase1.length;
       for (let i = 0; i < diff; i++) {
-        const fbItem = { ...FALLBACK_PHASE1[i] };
+        const fbItem = { ...targetFallback[i] };
         fbItem.id = phase1.length + 1;
         phase1.push(fbItem);
       }
@@ -318,9 +497,8 @@ app.get('/api/daily-news', async (req, res) => {
     });
     
   } catch (error) {
-    console.error('[API Error] Live API fetch failed. Serving fallback news portfolio:', error.message);
+    console.error(`[API Error] Live API fetch failed for ${categoryParam}. Serving fallback news portfolio:`, error.message);
     
-    // Complete local fallback payload
     const dateString = new Date().toLocaleDateString('en-US', {
       month: 'long',
       day: 'numeric',
@@ -329,7 +507,7 @@ app.get('/api/daily-news', async (req, res) => {
     
     res.json({
       dateString,
-      phase1: FALLBACK_PHASE1,
+      phase1: targetFallback,
       phase2: shuffleArray(PHASE2_POOL).slice(0, 3).map((item, idx) => ({
         id: idx + 1,
         ...item
