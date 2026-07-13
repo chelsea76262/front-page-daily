@@ -826,7 +826,15 @@ export default function FrontPageDaily() {
     const saved = localStorage.getItem('fpd_stats');
     if (saved) {
       try {
-        setStats(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        setStats({
+          gamesPlayed: parsed.gamesPlayed || 0,
+          totalScore: parsed.totalScore || 0,
+          currentStreak: parsed.currentStreak || 0,
+          maxStreak: parsed.maxStreak || 0,
+          lastPlayedDate: parsed.lastPlayedDate || null,
+          scoreHistory: parsed.scoreHistory || []
+        });
       } catch (e) {
         console.error('Failed to parse stats:', e);
       }
@@ -846,30 +854,28 @@ export default function FrontPageDaily() {
     const today = getLocalDateString(0);
     const yesterday = getLocalDateString(-1);
     
-    setStats(prev => {
-      let newStreak = prev.currentStreak;
-      
-      if (prev.lastPlayedDate === yesterday) {
-        newStreak += 1;
-      } else if (prev.lastPlayedDate === today) {
-        // Played today already, keep streak at current value (do not double-increment)
-      } else {
-        newStreak = 1;
-      }
-      
-      const newMaxStreak = Math.max(prev.maxStreak, newStreak);
-      const updated = {
-        gamesPlayed: (prev.gamesPlayed || 0) + 1,
-        totalScore: (prev.totalScore || 0) + finalScore,
-        currentStreak: newStreak,
-        maxStreak: newMaxStreak,
-        lastPlayedDate: today,
-        scoreHistory: [...(prev.scoreHistory || []), finalScore]
-      };
-      
-      localStorage.setItem('fpd_stats', JSON.stringify(updated));
-      return updated;
-    });
+    let newStreak = stats.currentStreak || 0;
+    
+    if (stats.lastPlayedDate === yesterday) {
+      newStreak += 1;
+    } else if (stats.lastPlayedDate === today) {
+      // Played today already, keep streak at current value (do not double-increment)
+    } else {
+      newStreak = 1;
+    }
+    
+    const newMaxStreak = Math.max(stats.maxStreak || 0, newStreak);
+    const updated = {
+      gamesPlayed: (stats.gamesPlayed || 0) + 1,
+      totalScore: (stats.totalScore || 0) + finalScore,
+      currentStreak: newStreak,
+      maxStreak: newMaxStreak,
+      lastPlayedDate: today,
+      scoreHistory: [...(stats.scoreHistory || []), finalScore]
+    };
+    
+    setStats(updated);
+    localStorage.setItem('fpd_stats', JSON.stringify(updated));
   };
 
   // Listen to PWA installation events
