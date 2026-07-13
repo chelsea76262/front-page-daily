@@ -646,7 +646,7 @@ function AuditScreen({ phase2Data, onChoiceComplete, onPhaseComplete }) {
 // ----------------------------------------------------
 // 5. SCREEN D: UNIFIED SCORE SUMMARY
 // ----------------------------------------------------
-function SummaryScreen({ dateString, globalScore, performanceLog, onReset }) {
+function SummaryScreen({ dateString, globalScore, performanceLog, onReset, stats }) {
   const [animatedScore, setAnimatedScore] = useState(0);
   const [showToast, setShowToast] = useState(false);
 
@@ -726,6 +726,28 @@ Play at Front Page Daily!`;
           {animatedScore} <span style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--text-muted)' }}>PTS</span>
         </div>
       </div>
+
+      {/* Stats Dashboard */}
+      {stats && stats.gamesPlayed > 0 && (
+        <div className="fp-stats-grid" style={{ marginTop: '0.5rem', marginBottom: '1rem' }}>
+          <div className="fp-stat-box" style={{ padding: '0.4rem 0.2rem' }}>
+            <div className="fp-stat-val" style={{ fontSize: '1.1rem' }}>{stats.gamesPlayed}</div>
+            <div className="fp-stat-lbl" style={{ fontSize: '0.55rem' }}>Played</div>
+          </div>
+          <div className="fp-stat-box" style={{ padding: '0.4rem 0.2rem' }}>
+            <div className="fp-stat-val" style={{ fontSize: '1.1rem' }}>🔥 {stats.currentStreak}</div>
+            <div className="fp-stat-lbl" style={{ fontSize: '0.55rem' }}>Streak</div>
+          </div>
+          <div className="fp-stat-box" style={{ padding: '0.4rem 0.2rem' }}>
+            <div className="fp-stat-val" style={{ fontSize: '1.1rem' }}>⭐ {stats.maxStreak}</div>
+            <div className="fp-stat-lbl" style={{ fontSize: '0.55rem' }}>Max</div>
+          </div>
+          <div className="fp-stat-box" style={{ padding: '0.4rem 0.2rem' }}>
+            <div className="fp-stat-val" style={{ fontSize: '1.1rem' }}>{Math.round(stats.totalScore / stats.gamesPlayed)}</div>
+            <div className="fp-stat-lbl" style={{ fontSize: '0.55rem' }}>Avg Pts</div>
+          </div>
+        </div>
+      )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem', textAlign: 'left', marginBottom: '0.5rem' }}>
         <div className="fp-summary-row">
@@ -825,22 +847,20 @@ export default function FrontPageDaily() {
     const yesterday = getLocalDateString(-1);
     
     setStats(prev => {
-      // Don't double-record streak increments if completed multiple times in one day
-      if (prev.lastPlayedDate === today) {
-        return prev;
-      }
-      
       let newStreak = prev.currentStreak;
+      
       if (prev.lastPlayedDate === yesterday) {
         newStreak += 1;
+      } else if (prev.lastPlayedDate === today) {
+        // Played today already, keep streak at current value (do not double-increment)
       } else {
         newStreak = 1;
       }
       
       const newMaxStreak = Math.max(prev.maxStreak, newStreak);
       const updated = {
-        gamesPlayed: prev.gamesPlayed + 1,
-        totalScore: prev.totalScore + finalScore,
+        gamesPlayed: (prev.gamesPlayed || 0) + 1,
+        totalScore: (prev.totalScore || 0) + finalScore,
         currentStreak: newStreak,
         maxStreak: newMaxStreak,
         lastPlayedDate: today,
@@ -998,6 +1018,7 @@ export default function FrontPageDaily() {
           globalScore={globalScore}
           performanceLog={performanceLog}
           onReset={resetGame}
+          stats={stats}
         />
       )}
     </div>
