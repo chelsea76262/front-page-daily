@@ -417,6 +417,12 @@ function synthesizeArticle(title, description) {
   };
 }
 
+function isDeathRelated(text) {
+  const lowercase = text.toLowerCase();
+  const deathKeywords = ['kill', 'die', 'dead', 'death', 'fatality', 'murder', 'casualty', 'drown', 'tragedy', 'mourn', 'suicide', 'fatal', 'homicide', 'massacre', 'stabbed', 'shooting', 'blast', 'collision', 'crash'];
+  return deathKeywords.some(kw => lowercase.includes(kw));
+}
+
 function extractTargetWord(title) {
   // Strip punctuation and split
   const words = title.toUpperCase().replace(/[^A-Z\s-]/g, '').split(/\s+/);
@@ -587,7 +593,8 @@ app.get('/api/daily-news', async (req, res) => {
     
     console.log('[API] Extracting wire templates and compiling definitions');
     const phase1 = [];
-    const itemsToProcess = feedData.items.slice(0, 10); // look at top 10 to get 5 clean ones
+    const itemsToProcess = feedData.items.slice(0, 15); // Look at top 15 items to get 5 clean ones
+    let deathStoriesCount = 0;
     
     for (const article of itemsToProcess) {
       if (phase1.length >= 5) break;
@@ -598,6 +605,12 @@ app.get('/api/daily-news', async (req, res) => {
       // Clean title from basic noise
       if (title.toLowerCase().includes('in pictures') || title.toLowerCase().includes('video:') || title.toLowerCase().includes('pictures:')) {
         continue; 
+      }
+      
+      // Limit death-related stories to at most one per session
+      const isDeath = isDeathRelated(title + " " + desc);
+      if (isDeath && deathStoriesCount >= 1) {
+        continue;
       }
       
       // Synthesize to be brand-safe & copyright-free (Option 2)
@@ -616,6 +629,10 @@ app.get('/api/daily-news', async (req, res) => {
       const scrambled = scrambleWord(target);
       const definition = await getDefinition(target);
       const wordBank = generateWordBank(target);
+      
+      if (isDeath) {
+        deathStoriesCount++;
+      }
       
       phase1.push({
         id: phase1.length + 1,

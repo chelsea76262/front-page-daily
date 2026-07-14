@@ -447,7 +447,7 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
           </p>
           
           <div className="fp-wire-snippet" style={{ marginBottom: '1.25rem', textAlign: 'left', fontStyle: 'italic' }}>
-            "{currentStory.wireSnippet}"
+            {currentStory.wireSnippet}
           </div>
 
           <button
