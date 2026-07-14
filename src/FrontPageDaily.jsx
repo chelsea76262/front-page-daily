@@ -710,7 +710,7 @@ function SummaryScreen({ dateString, globalScore, performanceLog, onReset, stats
     const end = globalScore;
     if (end === 0) return;
     
-    const step = Math.max(1, Math.ceil(end / 30));
+    const step = Math.max(1, Math.ceil(end / 12));
     
     const timer = setInterval(() => {
       start += step;
@@ -719,7 +719,7 @@ function SummaryScreen({ dateString, globalScore, performanceLog, onReset, stats
         clearInterval(timer);
       }
       setAnimatedScore(start);
-    }, 25);
+    }, 15);
 
     return () => clearInterval(timer);
   }, [globalScore]);
