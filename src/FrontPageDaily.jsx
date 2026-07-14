@@ -915,187 +915,187 @@ Play at Front Page Daily!`;
 const VOCABULARY_WORDS = [
   {
     word: "Obfuscate",
-    definition: "To deliberately make something obscure, unclear, or unintelligible.",
+    definition: "To make unclear or confusing.",
     distractors: [
-      "To reveal a hidden truth or expose a political scandal.",
-      "To organize news stories in a logical, chronological order.",
-      "To summarize a long article into a brief, easy-to-read headline."
+      "To reveal a hidden truth.",
+      "To organize news chronologically.",
+      "To write a short summary."
     ]
   },
   {
     word: "Synecdoche",
-    definition: "A figure of speech in which a part is made to represent the whole.",
+    definition: "A part representing the whole.",
     distractors: [
-      "A false statement published to damage a competitor's reputation.",
-      "A technical term for a printer jam in historic printing presses.",
-      "An anonymous tip received by an investigative journalist."
+      "A false damaging statement.",
+      "A technical printing error.",
+      "An anonymous source tip."
     ]
   },
   {
     word: "Demagogue",
-    definition: "A political leader who seeks support by appealing to popular desires rather than using rational argument.",
+    definition: "Leader appealing to prejudices.",
     distractors: [
-      "A neutral reporter who covers international conflict zones.",
-      "A specialized device used to measure editorial page layouts.",
-      "An editor who reviews articles exclusively for spelling mistakes."
+      "A neutral war reporter.",
+      "An editorial design tool.",
+      "A copy editor assistant."
     ]
   },
   {
     word: "Mercurial",
-    definition: "Subject to sudden or unpredictable changes of mood or mind.",
+    definition: "Unpredictable mood changes.",
     distractors: [
-      "Slow, calculated, and extremely thorough in research.",
-      "Having a metallic texture typical of lead-based printing plates.",
-      "A type of column layout with equal spacing between columns."
+      "Slow and research-focused.",
+      "A lead-based printing texture.",
+      "An equal spacing column layout."
     ]
   },
   {
     word: "Gerrymander",
-    definition: "Manipulating boundaries to favor one party or class.",
+    definition: "Manipulating voting boundaries.",
     distractors: [
-      "Approving articles for printing without checking for facts.",
-      "Writing dramatic headlines that misrepresent the news content.",
-      "A fast-paced type of interview conducted with public officials."
+      "Approving draft publications.",
+      "Writing dramatic clickbait.",
+      "A quick official interview."
     ]
   },
   {
     word: "Hegemony",
-    definition: "Leadership or dominance, especially by one country or social group over others.",
+    definition: "Dominance of one group.",
     distractors: [
-      "A collaborative union formed by competing news organizations.",
-      "A system for dividing editorial roles in a digital newsroom.",
-      "A type of printer font popular in late 19th-century tabloids."
+      "A cooperative union.",
+      "Newsroom roles division.",
+      "A classic serif typography font."
     ]
   },
   {
     word: "Spurious",
-    definition: "Not being what it purports to be; false or fake.",
+    definition: "False or fake.",
     distractors: [
-      "Highly creative and engaging in narrative style.",
-      "Urgent or requiring immediate publication in the evening edition.",
-      "Relating to chemical analysis of printing ink quality."
+      "Highly creative narrative style.",
+      "An urgent breaking alert.",
+      "Pertaining to chemical ink check."
     ]
   },
   {
     word: "Obsequious",
-    definition: "Obedient or attentive to an excessive or servile degree.",
+    definition: "Excessively obedient or attentive.",
     distractors: [
-      "Rude and dismissive toward editorial feedback.",
-      "Difficult to read due to outdated printing mechanics.",
-      "Highly analytical and objective in investigative reports."
+      "Rude to editorial feedback.",
+      "Outdated layout mechanism.",
+      "Highly analytical and objective."
     ]
   },
   {
     word: "Paucity",
-    definition: "The presence of something only in small or insufficient quantities; scarcity.",
+    definition: "Scarcity or small quantity.",
     distractors: [
-      "An abundance of sources confirming a news story.",
-      "The fast processing of print files on a layout machine.",
-      "A legal document protecting a journalist's source identity."
+      "Abundance of news sources.",
+      "Fast layout machine speed.",
+      "A source protection decree."
     ]
   },
   {
     word: "Sycophant",
-    definition: "A person who acts obsequiously toward someone important in order to gain advantage; a flatterer.",
+    definition: "Flatterer seeking self-advantage.",
     distractors: [
-      "An editor who challenges the official government narrative.",
-      "A print technician who repairs large newspaper press rollers.",
-      "A fictional character created to write satirical reviews."
+      "Editor fighting censorship.",
+      "Printing press repair technician.",
+      "A generic satirical alias."
     ]
   },
   {
     word: "Cacophony",
-    definition: "A harsh, discordant mixture of sounds.",
+    definition: "Harsh, discordant sounds.",
     distractors: [
-      "A pleasant and melodic harmony of voices.",
-      "The fast click-clack sound of a mechanical typewriter.",
-      "A technique for organizing paragraphs in news stories."
+      "Melodic harmony of voices.",
+      "Typewriter typing sound.",
+      "Paragraph outline technique."
     ]
   },
   {
     word: "Recalcitrant",
-    definition: "Having an obstinately uncooperative attitude toward authority or discipline.",
+    definition: "Uncooperative toward authority.",
     distractors: [
-      "Very eager to help and follow editorial style guides.",
-      "Relating to old, recycled paper pulp used in newsprint.",
-      "Easily broken or torn under minor mechanical stress."
+      "Eager to follow style guides.",
+      "Recycled paper pulp texture.",
+      "Easily torn layout sheets."
     ]
   },
   {
     word: "Capricious",
-    definition: "Given to sudden and unaccountable changes of mood or behavior.",
+    definition: "Sudden changes of mood.",
     distractors: [
-      "Steady, reliable, and strictly adhering to deadlines.",
-      "Belonging to a traditional style of typography.",
-      "Highly logical and systematic in investigative audits."
+      "Reliable and deadline-focused.",
+      "Traditional printing fonts.",
+      "Systematic investigative audit."
     ]
   },
   {
     word: "Anachronism",
-    definition: "A thing belonging or appropriate to a period other than that in which it exists.",
+    definition: "Belonging to another time period.",
     distractors: [
-      "A modern digital editing tool used on old articles.",
-      "A system for measuring the speed of news transmission.",
-      "A secret agreement made between reporters and politicians."
+      "Modern digital editing tool.",
+      "News transmission speed meter.",
+      "Secret political reporter deal."
     ]
   },
   {
     word: "Superfluous",
-    definition: "Unnecessary, especially through being more than enough.",
+    definition: "Unnecessary or excessive.",
     distractors: [
-      "Extremely important and critical for the front page layout.",
-      "Short and concise, fitting perfectly in narrow columns.",
-      "Written in an objective, neutral tone without adjectives."
+      "Critical front page layout.",
+      "Short and concise headline.",
+      "Written in a neutral tone."
     ]
   },
   {
     word: "Pernicious",
-    definition: "Having a harmful effect, especially in a gradual or subtle way.",
+    definition: "Gradually harmful or destructive.",
     distractors: [
-      "Extremely helpful and beneficial to public understanding.",
-      "Fast-paced and exciting to read for early morning commuters.",
-      "Relating to a style of bold headers in classic papers."
+      "Highly beneficial to public.",
+      "Exciting for morning commuters.",
+      "Classic bold heading design."
     ]
   },
   {
     word: "Quixotic",
-    definition: "Exceedingly idealistic, unrealistic, and impractical.",
+    definition: "Idealistic and impractical.",
     distractors: [
-      "Pragmatic, sensible, and focused on immediate results.",
-      "Pertaining to a quick response to breaking news alerts.",
-      "A type of ink that dries instantly upon printing."
+      "Pragmatic and results-focused.",
+      "Quick breaking news response.",
+      "Fast-drying typographic ink."
     ]
   },
   {
     word: "Taciturn",
-    definition: "Reserved or uncommunicative in speech; saying little.",
+    definition: "Silent and uncommunicative.",
     distractors: [
-      "Very loud and chatty in busy newsrooms.",
-      "Expressing extreme emotion in personal editorial columns.",
-      "Pertaining to a type of mechanical typesetting machine."
+      "Loud and talkative in newsrooms.",
+      "Highly emotional opinion columns.",
+      "A mechanical sorting machine."
     ]
   },
   {
     word: "Pugnacious",
-    definition: "Eager or quick to argue, quarrel, or fight.",
+    definition: "Eager or quick to fight.",
     distractors: [
-      "Gentle, peaceful, and cooperative in team projects.",
-      "Relating to the design of funny cartoon illustrations.",
-      "Having a sharp, pleasant smell of freshly printed ink."
+      "Gentle and team-cooperative.",
+      "Funny cartoon illustrations.",
+      "Sharp fresh printing ink smell."
     ]
   },
   {
     word: "Surreptitious",
-    definition: "Kept secret, especially because it would not be approved of.",
+    definition: "Secret and unauthorized.",
     distractors: [
-      "Widely broadcast and advertised across public media.",
-      "Relating to a official legal decree by the government.",
-      "Extremely fast and efficient at generating layout designs."
+      "Publicly broadcast worldwide.",
+      "Official government decree.",
+      "Fast graphic layout creation."
     ]
   }
 ];
 
-function VocabularyGameScreen({ onExit }) {
+function VocabularyGameScreen({ onExit, onAwardPoints }) {
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
@@ -1103,11 +1103,21 @@ function VocabularyGameScreen({ onExit }) {
   const [wordData, setWordData] = useState(null);
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [gameState, setGameState] = useState('PLAYING');
-  
+  const [gameState, setGameState] = useState('PLAYING'); // 'PLAYING', 'ANSWERED', 'ROUND_OVER'
+
+  const [wordsPlayedCount, setWordsPlayedCount] = useState(0);
+  const [roundScore, setRoundScore] = useState(0);
+  const [removalsLeft, setRemovalsLeft] = useState(2);
+  const [removedOptions, setRemovedOptions] = useState(new Set());
+  const [isEndless, setIsEndless] = useState(false);
+
   const loadNextWord = () => {
+    if (!isEndless && wordsPlayedCount >= 3) {
+      setGameState('ROUND_OVER');
+      return;
+    }
+
     const randomWord = VOCABULARY_WORDS[Math.floor(Math.random() * VOCABULARY_WORDS.length)];
-    // Fisher-Yates shuffle array
     const shuffleArray = (array) => {
       const arr = [...array];
       for (let i = arr.length - 1; i > 0; i--) {
@@ -1121,28 +1131,146 @@ function VocabularyGameScreen({ onExit }) {
     setOptions(allOptions);
     setSelectedOption(null);
     setGameState('PLAYING');
+    setRemovalsLeft(2);
+    setRemovedOptions(new Set());
   };
 
   useEffect(() => {
     loadNextWord();
-  }, []);
+  }, [isEndless]);
 
   const handleOptionClick = (option) => {
     if (gameState !== 'PLAYING') return;
     setSelectedOption(option);
     setGameState('ANSWERED');
+    setWordsPlayedCount(prev => prev + 1);
     
     if (option === wordData.definition) {
       setScore(prev => prev + 50);
+      setRoundScore(prev => prev + 50);
       setStreak(prev => {
         const next = prev + 1;
         if (next > maxStreak) setMaxStreak(next);
         return next;
       });
+      if (onAwardPoints) {
+        onAwardPoints(25); // Award +25 bonus points
+      }
     } else {
       setStreak(0);
     }
   };
+
+  const handleRemoveChoice = () => {
+    if (removalsLeft <= 0 || gameState !== 'PLAYING') return;
+    
+    const incorrectOptions = options.filter(opt => opt !== wordData.definition && !removedOptions.has(opt));
+    
+    if (incorrectOptions.length > 0) {
+      const randomIncorrect = incorrectOptions[Math.floor(Math.random() * incorrectOptions.length)];
+      setRemovedOptions(prev => {
+        const updated = new Set(prev);
+        updated.add(randomIncorrect);
+        return updated;
+      });
+      setRemovalsLeft(prev => prev - 1);
+    }
+  };
+
+  const handleStartNextRound = () => {
+    setWordsPlayedCount(0);
+    setRoundScore(0);
+    setIsEndless(false);
+    setTimeout(() => {
+      const randomWord = VOCABULARY_WORDS[Math.floor(Math.random() * VOCABULARY_WORDS.length)];
+      const shuffleArray = (array) => {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      };
+      const allOptions = shuffleArray([randomWord.definition, ...randomWord.distractors]);
+      setWordData(randomWord);
+      setOptions(allOptions);
+      setSelectedOption(null);
+      setGameState('PLAYING');
+      setRemovalsLeft(2);
+      setRemovedOptions(new Set());
+    }, 50);
+  };
+
+  const handleStartEndless = () => {
+    setIsEndless(true);
+    setWordsPlayedCount(0);
+    setRoundScore(0);
+    setTimeout(() => {
+      const randomWord = VOCABULARY_WORDS[Math.floor(Math.random() * VOCABULARY_WORDS.length)];
+      const shuffleArray = (array) => {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      };
+      const allOptions = shuffleArray([randomWord.definition, ...randomWord.distractors]);
+      setWordData(randomWord);
+      setOptions(allOptions);
+      setSelectedOption(null);
+      setGameState('PLAYING');
+      setRemovalsLeft(2);
+      setRemovedOptions(new Set());
+    }, 50);
+  };
+
+  if (gameState === 'ROUND_OVER') {
+    return (
+      <div className="fp-card fp-form animate-fade-in" style={{ textAlign: 'center', padding: '2rem' }}>
+        <span style={{ fontSize: '2rem', display: 'block', marginBottom: '0.5rem' }}>🎓</span>
+        <h2 className="fp-title-serif" style={{ fontSize: '1.8rem', margin: '0.5rem 0' }}>
+          Round Completed!
+        </h2>
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+          You solved the 3-word challenge. Any correct answers earned you **+25 PTS** bonus directly to your daily global score!
+        </p>
+
+        <div style={{ backgroundColor: 'var(--bg-page)', padding: '1rem', borderRadius: 'var(--border-radius)', border: '1px solid var(--border-subtle)', marginBottom: '1.5rem' }}>
+          <div style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-muted)' }}>Round Score</div>
+          <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--accent-gold)' }}>+{roundScore} PTS</div>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Streak: 🔥 {streak}</div>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <button
+            type="button"
+            onClick={handleStartNextRound}
+            className="fp-btn fp-btn-primary"
+            style={{ width: '100%' }}
+          >
+            Play Another Round (3 Words) 🔄
+          </button>
+          <button
+            type="button"
+            onClick={handleStartEndless}
+            className="fp-btn"
+            style={{ width: '100%', backgroundColor: 'var(--accent-blue-light)', color: 'var(--accent-blue)', fontWeight: 800 }}
+          >
+            Continue Endless Play 🚀
+          </button>
+          <button
+            type="button"
+            onClick={onExit}
+            className="fp-btn fp-btn-action"
+            style={{ width: '100%' }}
+          >
+            Return to Summary Screen
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!wordData) return null;
 
@@ -1159,25 +1287,53 @@ function VocabularyGameScreen({ onExit }) {
           ← Exit Lexicon
         </button>
         <div style={{ display: 'flex', gap: '1rem', fontSize: '0.7rem', fontWeight: 800 }}>
+          <span style={{ color: 'var(--text-muted)' }}>
+            {!isEndless ? `WORD: ${wordsPlayedCount + (gameState === 'PLAYING' ? 1 : 0)}/3` : 'ENDLESS MODE'}
+          </span>
           <span style={{ color: 'var(--accent-gold)' }}>SCORE: {score}</span>
-          <span style={{ color: 'var(--accent-blue)' }}>STREAK: 🔥 {streak} (Max: {maxStreak})</span>
+          <span style={{ color: 'var(--accent-blue)' }}>STREAK: 🔥 {streak}</span>
         </div>
       </div>
 
       <div style={{ margin: '1.5rem 0' }}>
         <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>
-          EDITOR'S LEXICON (ENDLESS)
+          EDITOR'S LEXICON
         </span>
         <h2 className="fp-title-serif" style={{ fontSize: '2.2rem', letterSpacing: '0.02em', margin: '0.5rem 0' }}>
           {wordData.word}
         </h2>
         <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-          Identify the correct journalistic or literary definition below:
+          Identify the correct definition:
         </p>
       </div>
 
+      {/* Remove Choice Lifeline Button */}
+      {gameState === 'PLAYING' && (
+        <div style={{ marginBottom: '1rem' }}>
+          <button
+            type="button"
+            onClick={handleRemoveChoice}
+            disabled={removalsLeft <= 0}
+            className="fp-btn"
+            style={{ 
+              fontSize: '0.75rem', 
+              padding: '0.4rem 0.8rem', 
+              backgroundColor: removalsLeft > 0 ? 'var(--accent-red-light)' : 'var(--bg-page)', 
+              color: removalsLeft > 0 ? 'var(--accent-red)' : 'var(--text-muted)', 
+              border: `1px solid ${removalsLeft > 0 ? 'var(--accent-red)' : 'var(--border-subtle)'}`,
+              borderRadius: '20px',
+              fontWeight: 800
+            }}
+          >
+            ✂️ Remove a Choice ({removalsLeft} left)
+          </button>
+        </div>
+      )}
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.5rem 0', textAlign: 'left' }}>
         {options.map((opt) => {
+          if (removedOptions.has(opt)) return null;
+
           let btnClass = "fp-btn fp-btn-action";
           let style = { width: '100%', whiteSpace: 'normal', textAlign: 'left', lineHeight: '1.4', padding: '0.8rem 1rem' };
           
@@ -1221,7 +1377,7 @@ function VocabularyGameScreen({ onExit }) {
             border: `1px solid ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}`
           }}
         >
-          <strong>{isCorrect ? "Correct! 🎉" : "Incorrect. ❌"}</strong> {wordData.word} means: <em>"{wordData.definition}"</em>
+          <strong>{isCorrect ? "Correct! 🎉 (+25 Bonus PTS)" : "Incorrect. ❌"}</strong> {wordData.word} means: <em>"{wordData.definition}"</em>
         </div>
       )}
 
@@ -1493,6 +1649,21 @@ export default function FrontPageDaily() {
     }));
   };
 
+  const handleAwardLexiconPoints = (pts) => {
+    setGlobalScore(prev => {
+      const newScore = prev + pts;
+      setStats(old => {
+        const updated = {
+          ...old,
+          totalScore: (old.totalScore || 0) + pts
+        };
+        localStorage.setItem('fpd_stats', JSON.stringify(updated));
+        return updated;
+      });
+      return newScore;
+    });
+  };
+
   const handlePhase2Complete = () => {
     updateStatsAfterCompletion(globalScore);
     try {
@@ -1598,6 +1769,7 @@ export default function FrontPageDaily() {
       {currentScreen === 'VOCABULARY_GAME' && (
         <VocabularyGameScreen
           onExit={() => setCurrentScreen('SUMMARY')}
+          onAwardPoints={handleAwardLexiconPoints}
         />
       )}
     </div>
