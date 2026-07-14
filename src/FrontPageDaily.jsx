@@ -1307,29 +1307,6 @@ function VocabularyGameScreen({ onExit, onAwardPoints }) {
         </p>
       </div>
 
-      {/* Remove Choice Lifeline Button */}
-      {gameState === 'PLAYING' && (
-        <div style={{ marginBottom: '1rem' }}>
-          <button
-            type="button"
-            onClick={handleRemoveChoice}
-            disabled={removalsLeft <= 0}
-            className="fp-btn"
-            style={{ 
-              fontSize: '0.75rem', 
-              padding: '0.4rem 0.8rem', 
-              backgroundColor: removalsLeft > 0 ? 'var(--accent-red-light)' : 'var(--bg-page)', 
-              color: removalsLeft > 0 ? 'var(--accent-red)' : 'var(--text-muted)', 
-              border: `1px solid ${removalsLeft > 0 ? 'var(--accent-red)' : 'var(--border-subtle)'}`,
-              borderRadius: '20px',
-              fontWeight: 800
-            }}
-          >
-            ✂️ Remove a Choice ({removalsLeft} left)
-          </button>
-        </div>
-      )}
-
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.5rem 0', textAlign: 'left' }}>
         {options.map((opt) => {
           if (removedOptions.has(opt)) return null;
@@ -1361,6 +1338,29 @@ function VocabularyGameScreen({ onExit, onAwardPoints }) {
           );
         })}
       </div>
+
+      {/* Remove Choice Lifeline Button */}
+      {gameState === 'PLAYING' && (
+        <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+          <button
+            type="button"
+            onClick={handleRemoveChoice}
+            disabled={removalsLeft <= 0}
+            className="fp-btn"
+            style={{ 
+              fontSize: '0.75rem', 
+              padding: '0.4rem 0.8rem', 
+              backgroundColor: removalsLeft > 0 ? 'var(--accent-red-light)' : 'var(--bg-page)', 
+              color: removalsLeft > 0 ? 'var(--accent-red)' : 'var(--text-muted)', 
+              border: `1px solid ${removalsLeft > 0 ? 'var(--accent-red)' : 'var(--border-subtle)'}`,
+              borderRadius: '20px',
+              fontWeight: 800
+            }}
+          >
+            ✂️ remove a choice ({removalsLeft} left)
+          </button>
+        </div>
+      )}
 
       {gameState === 'ANSWERED' && (
         <div 
