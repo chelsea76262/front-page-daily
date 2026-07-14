@@ -214,7 +214,7 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
     
     if (normalizedGuess === currentStory.targetWord) {
       const isHardWithNoHint = difficulty === 'HARD' && !p1HintUsed && easyHintStage === 0;
-      let pts = 50; // Easy mode base score
+      let pts = 25; // Easy mode base score (half of 50)
       let status = 'HINT_OR_EASY';
 
       if (hasRevealed) {
@@ -222,13 +222,13 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
         status = 'REVEALED';
       } else {
         if (isHardWithNoHint) {
-          pts = 100; // Hard mode perfect solve
+          pts = 50; // Hard mode perfect solve (half of 100)
           status = 'HARD_NO_HINT';
         } else {
           if (difficulty === 'HARD') {
-            if (easyHintStage === 1) pts = 80;
-            else if (easyHintStage === 2) pts = 70;
-            else if (p1HintUsed) pts = 50;
+            if (easyHintStage === 1) pts = 40;     // half of 80
+            else if (easyHintStage === 2) pts = 35; // half of 70
+            else if (p1HintUsed) pts = 25;          // half of 50
           }
           status = 'HINT_OR_EASY';
         }
@@ -246,7 +246,7 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
   const handleWordSelect = (word) => {
     const normalizedWord = word.trim().toUpperCase();
     if (normalizedWord === currentStory.targetWord) {
-      const pts = 50;
+      const pts = 25; // half of 50
       const status = 'HINT_OR_EASY';
       
       setPointsAwarded(pts);
@@ -505,7 +505,7 @@ function AuditScreen({ phase2Data, onChoiceComplete, onPhaseComplete }) {
     }, 600);
 
     // Call choice completion to parent log but do not change screen yet
-    onChoiceComplete(isCorrect ? 50 : 0, isCorrect ? 'CORRECT' : 'INCORRECT');
+    onChoiceComplete(isCorrect ? 25 : 0, isCorrect ? 'CORRECT' : 'INCORRECT');
   };
 
   // Drag Event Handlers
@@ -710,26 +710,26 @@ function SummaryScreen({ dateString, globalScore, performanceLog, onReset, stats
     const end = globalScore;
     if (end === 0) return;
     
-    const duration = 1000; 
-    const stepTime = Math.abs(Math.floor(duration / end));
+    const step = Math.max(1, Math.ceil(end / 30));
     
     const timer = setInterval(() => {
-      start += 1;
-      setAnimatedScore(start);
+      start += step;
       if (start >= end) {
+        start = end;
         clearInterval(timer);
       }
-    }, Math.max(stepTime, 10));
+      setAnimatedScore(start);
+    }, 25);
 
     return () => clearInterval(timer);
   }, [globalScore]);
 
   // Determine Rank based on score thresholds
   const getRank = (score) => {
-    if (score >= 500) return "Executive Editor 🏆";
-    if (score >= 350) return "Managing Editor ✍️";
-    if (score >= 200) return "Senior Reporter 🕵️";
-    if (score >= 100) return "Cub Reporter 📝";
+    if (score >= 250) return "Executive Editor 🏆";
+    if (score >= 175) return "Managing Editor ✍️";
+    if (score >= 100) return "Senior Reporter 🕵️";
+    if (score >= 50) return "Cub Reporter 📝";
     return "Editorial Intern ☕";
   };
 
@@ -838,80 +838,70 @@ Play at Front Page Daily!`;
         </button>
       </div>
 
-      {/* Play Another Edition or Overtime */}
-      {playedCategories && playedCategories.length >= 4 ? (
-        <div style={{ borderTop: '1px dashed var(--border-dashed)', paddingTop: '1.25rem', marginTop: '1.25rem', textAlign: 'center' }}>
-          <div className="fp-overtime-box" style={{ padding: '1rem', backgroundColor: 'var(--accent-gold-light)', borderRadius: 'var(--border-radius)', border: '1px solid var(--accent-gold)' }}>
-            <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '0.25rem' }}>🎓</span>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--accent-gold)', display: 'block', marginBottom: '0.25rem' }}>
-              Overtime Unlocked!
-            </span>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.75rem', lineHeight: '1.4' }}>
-              You have completed every news edition for today. Play the endless **Editor's Lexicon** to build your news vocabulary!
-            </p>
-            <button
-              type="button"
-              onClick={onLaunchLexicon}
-              className="fp-btn"
-              style={{ width: '100%', backgroundColor: 'var(--accent-gold)', color: 'var(--text-dark)', fontWeight: 800 }}
-            >
-              Play Editor's Lexicon ✍️
-            </button>
+      {/* Play Another Edition */}
+      <div style={{ borderTop: '1px dashed var(--border-dashed)', paddingTop: '1rem', marginTop: '1rem' }}>
+        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.6rem' }}>
+          Play Another Edition
+        </span>
+        <div className="fp-category-grid" style={{ marginTop: '0.5rem', marginBottom: '1rem' }}>
+          <div
+            className="fp-category-card"
+            style={{ padding: '0.6rem 0.3rem' }}
+            onClick={() => {
+              setSelectedCategory('world');
+              onReset();
+            }}
+          >
+            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🌍</span>
+            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Headline News</span>
+          </div>
+          <div
+            className="fp-category-card"
+            style={{ padding: '0.6rem 0.3rem' }}
+            onClick={() => {
+              setSelectedCategory('popculture');
+              onReset();
+            }}
+          >
+            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🎬</span>
+            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Pop Culture</span>
+          </div>
+          <div
+            className="fp-category-card"
+            style={{ padding: '0.6rem 0.3rem' }}
+            onClick={() => {
+              setSelectedCategory('sports');
+              onReset();
+            }}
+          >
+            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🏆</span>
+            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Sports</span>
+          </div>
+          <div
+            className="fp-category-card"
+            style={{ padding: '0.6rem 0.3rem' }}
+            onClick={() => {
+              setSelectedCategory('technology');
+              onReset();
+            }}
+          >
+            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>💻</span>
+            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Tech & Science</span>
           </div>
         </div>
-      ) : (
-        <div style={{ borderTop: '1px dashed var(--border-dashed)', paddingTop: '1rem', marginTop: '1rem' }}>
-          <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.6rem' }}>
-            Play Another Edition
-          </span>
-          <div className="fp-category-grid" style={{ marginTop: '0.5rem', marginBottom: '0rem' }}>
-            <div
-              className="fp-category-card"
-              style={{ padding: '0.6rem 0.3rem' }}
-              onClick={() => {
-                setSelectedCategory('world');
-                onReset();
-              }}
-            >
-              <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🌍</span>
-              <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Headline News</span>
-            </div>
-            <div
-              className="fp-category-card"
-              style={{ padding: '0.6rem 0.3rem' }}
-              onClick={() => {
-                setSelectedCategory('popculture');
-                onReset();
-              }}
-            >
-              <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🎬</span>
-              <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Pop Culture</span>
-            </div>
-            <div
-              className="fp-category-card"
-              style={{ padding: '0.6rem 0.3rem' }}
-              onClick={() => {
-                setSelectedCategory('sports');
-                onReset();
-              }}
-            >
-              <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🏆</span>
-              <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Sports</span>
-            </div>
-            <div
-              className="fp-category-card"
-              style={{ padding: '0.6rem 0.3rem' }}
-              onClick={() => {
-                setSelectedCategory('technology');
-                onReset();
-              }}
-            >
-              <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>💻</span>
-              <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Tech & Science</span>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
+
+      {/* Editor's Lexicon (Permanent Overtime Option) */}
+      <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem', marginTop: '0.5rem' }}>
+        <button
+          type="button"
+          onClick={onLaunchLexicon}
+          className="fp-btn"
+          style={{ width: '100%', backgroundColor: 'var(--accent-gold)', color: 'var(--text-dark)', fontWeight: 800, padding: '0.75rem' }}
+        >
+          🎓 Play Endless Editor's Lexicon
+        </button>
+      </div>
 
       {showToast && (
         <div className="fp-toast">
@@ -1143,7 +1133,7 @@ function VocabularyGameScreen({ onExit }) {
     setGameState('ANSWERED');
     
     if (option === wordData.definition) {
-      setScore(prev => prev + 100);
+      setScore(prev => prev + 50);
       setStreak(prev => {
         const next = prev + 1;
         if (next > maxStreak) setMaxStreak(next);

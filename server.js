@@ -382,6 +382,41 @@ const WORDBANK_POOL = [
 // ----------------------------------------------------
 // 2. HELPER UTILITIES
 // ----------------------------------------------------
+function synthesizeArticle(title, description) {
+  // 1. Strip publisher names (trademark safety)
+  let cleanTitle = title.replace(/\b(BBC|AP|Reuters|Associated Press|CNN|Bloomberg|Fox|Guardian|New York Times|NYT)\b/gi, "Global Agency");
+  let cleanDesc = description.replace(/\b(BBC|AP|Reuters|Associated Press|CNN|Bloomberg|Fox|Guardian|New York Times|NYT)\b/gi, "reputable correspondents");
+
+  // 2. Perform general entities replacement for common political/public names (copyright & brand safety)
+  const entityReplacements = [
+    { regex: /\bBiden\b/gi, replacement: "The President" },
+    { regex: /\bHarris\b/gi, replacement: "The Vice President" },
+    { regex: /\bTrump\b/gi, replacement: "The Candidate" },
+    { regex: /\bStarmer\b/gi, replacement: "The Prime Minister" },
+    { regex: /\bSunak\b/gi, replacement: "The Leader" },
+    { regex: /\bZelensky\b/gi, replacement: "The Foreign Leader" },
+    { regex: /\bNetanyahu\b/gi, replacement: "The Representative" },
+    { regex: /\bMacron\b/gi, replacement: "The Chief Executive" },
+    { regex: /\bPutin\b/gi, replacement: "The Sovereign" },
+    { regex: /\bBoeing\b/gi, replacement: "Aviation Giant" },
+    { regex: /\bApple\b/gi, replacement: "Tech Conglomerate" },
+    { regex: /\bMicrosoft\b/gi, replacement: "Software Leader" },
+    { regex: /\bGoogle\b/gi, replacement: "Search Pioneer" },
+    { regex: /\bMeta\b/gi, replacement: "Social Network" },
+    { regex: /\bTesla\b/gi, replacement: "EV Manufacturer" }
+  ];
+
+  for (const item of entityReplacements) {
+    cleanTitle = cleanTitle.replace(item.regex, item.replacement);
+    cleanDesc = cleanDesc.replace(item.regex, item.replacement);
+  }
+
+  return {
+    synthesizedTitle: cleanTitle,
+    synthesizedDesc: cleanDesc
+  };
+}
+
 function extractTargetWord(title) {
   // Strip punctuation and split
   const words = title.toUpperCase().replace(/[^A-Z\s-]/g, '').split(/\s+/);
@@ -565,12 +600,15 @@ app.get('/api/daily-news', async (req, res) => {
         continue; 
       }
       
-      const target = extractTargetWord(title);
+      // Synthesize to be brand-safe & copyright-free (Option 2)
+      const { synthesizedTitle, synthesizedDesc } = synthesizeArticle(title, desc);
+      
+      const target = extractTargetWord(synthesizedTitle);
       if (!target || target.length < 3) continue;
       
       // Create headline template by replacing the target word
       const regex = new RegExp(`\\b${target}\\b`, 'gi');
-      const template = title.toUpperCase().replace(regex, "______");
+      const template = synthesizedTitle.toUpperCase().replace(regex, "______");
       
       // Double check that we actually replaced the word (so it was in the title)
       if (!template.includes("______")) continue;
@@ -586,7 +624,7 @@ app.get('/api/daily-news', async (req, res) => {
         targetWord: target,
         scrambled: scrambled,
         definition: definition,
-        wireSnippet: desc,
+        wireSnippet: synthesizedDesc,
         wordBank: wordBank
       });
     }
