@@ -213,8 +213,8 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
     const normalizedGuess = guess.trim().toUpperCase();
     
     if (normalizedGuess === currentStory.targetWord) {
-      const isHardWithNoHint = difficulty === 'HARD' && !p1HintUsed;
-      let pts = 15;
+      const isHardWithNoHint = difficulty === 'HARD' && !p1HintUsed && easyHintStage === 0;
+      let pts = 50; // Easy mode base score
       let status = 'HINT_OR_EASY';
 
       if (hasRevealed) {
@@ -222,11 +222,14 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
         status = 'REVEALED';
       } else {
         if (isHardWithNoHint) {
-          pts = 25;
+          pts = 100; // Hard mode perfect solve
           status = 'HARD_NO_HINT';
         } else {
-          if (easyHintStage === 1) pts = 10;
-          else if (easyHintStage === 2) pts = 5;
+          if (difficulty === 'HARD') {
+            if (easyHintStage === 1) pts = 80;
+            else if (easyHintStage === 2) pts = 70;
+            else if (p1HintUsed) pts = 50;
+          }
           status = 'HINT_OR_EASY';
         }
       }
@@ -243,9 +246,8 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
   const handleWordSelect = (word) => {
     const normalizedWord = word.trim().toUpperCase();
     if (normalizedWord === currentStory.targetWord) {
-      const isHardWithNoHint = difficulty === 'HARD' && !p1HintUsed;
-      const pts = isHardWithNoHint ? 25 : 15;
-      const status = isHardWithNoHint ? 'HARD_NO_HINT' : 'HINT_OR_EASY';
+      const pts = 50;
+      const status = 'HINT_OR_EASY';
       
       setPointsAwarded(pts);
       setResolutionStatus(status);
@@ -303,9 +305,6 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
           {showMultipleChoiceLayout ? (
             // Easy Mode: Multiple Choice (Word Bank) Layout
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div className="fp-wire-snippet">
-                "{currentStory.wireSnippet}"
-              </div>
               <div className="fp-word-bank">
                 {currentStory.wordBank.map((word) => {
                   const isFailed = failedWords.has(word);
@@ -441,18 +440,23 @@ function WireFeedScreen({ difficulty, phase1Data, onStoryComplete }) {
           <p style={{
             fontWeight: 800,
             color: resolutionStatus === 'REVEALED' ? 'var(--accent-red)' : 'var(--accent-green)',
-            margin: '0 0 1.25rem 0',
+            margin: '0 0 0.75rem 0',
             fontSize: '0.95rem'
           }}>
             {resolutionStatus === 'REVEALED' ? 'Headline Logged with Failures.' : 'Headline Logged Successfully.'}
           </p>
+          
+          <div className="fp-wire-snippet" style={{ marginBottom: '1.25rem', textAlign: 'left', fontStyle: 'italic' }}>
+            "{currentStory.wireSnippet}"
+          </div>
+
           <button
             type="button"
             onClick={advanceP1}
             className="fp-btn fp-btn-primary"
             style={{ width: '100%' }}
           >
-            {p1Index === phase1Data.length - 1 ? 'Proceed to Audit Feed →' : 'Next Assignment →'}
+            {p1Index === phase1Data.length - 1 ? 'Proceed to next stage →' : 'Next Assignment →'}
           </button>
         </div>
       )}
@@ -501,7 +505,7 @@ function AuditScreen({ phase2Data, onChoiceComplete, onPhaseComplete }) {
     }, 600);
 
     // Call choice completion to parent log but do not change screen yet
-    onChoiceComplete(isCorrect ? 25 : 0, isCorrect ? 'CORRECT' : 'INCORRECT');
+    onChoiceComplete(isCorrect ? 50 : 0, isCorrect ? 'CORRECT' : 'INCORRECT');
   };
 
   // Drag Event Handlers
@@ -697,7 +701,7 @@ function AuditScreen({ phase2Data, onChoiceComplete, onPhaseComplete }) {
 // ----------------------------------------------------
 // 5. SCREEN D: UNIFIED SCORE SUMMARY
 // ----------------------------------------------------
-function SummaryScreen({ dateString, globalScore, performanceLog, onReset, stats, setSelectedCategory }) {
+function SummaryScreen({ dateString, globalScore, performanceLog, onReset, stats, setSelectedCategory, playedCategories, onLaunchLexicon }) {
   const [animatedScore, setAnimatedScore] = useState(0);
   const [showToast, setShowToast] = useState(false);
 
@@ -722,10 +726,10 @@ function SummaryScreen({ dateString, globalScore, performanceLog, onReset, stats
 
   // Determine Rank based on score thresholds
   const getRank = (score) => {
-    if (score >= 120) return "Executive Editor 🏆";
-    if (score >= 90) return "Managing Editor ✍️";
-    if (score >= 60) return "Senior Reporter 🕵️";
-    if (score >= 30) return "Cub Reporter 📝";
+    if (score >= 500) return "Executive Editor 🏆";
+    if (score >= 350) return "Managing Editor ✍️";
+    if (score >= 200) return "Senior Reporter 🕵️";
+    if (score >= 100) return "Cub Reporter 📝";
     return "Editorial Intern ☕";
   };
 
@@ -834,64 +838,498 @@ Play at Front Page Daily!`;
         </button>
       </div>
 
-      {/* Play Another Edition */}
-      <div style={{ borderTop: '1px dashed var(--border-dashed)', paddingTop: '1rem', marginTop: '1rem' }}>
-        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.6rem' }}>
-          Play Another Edition
-        </span>
-        <div className="fp-category-grid" style={{ marginTop: '0.5rem', marginBottom: '0rem' }}>
-          <div
-            className="fp-category-card"
-            style={{ padding: '0.6rem 0.3rem' }}
-            onClick={() => {
-              setSelectedCategory('world');
-              onReset();
-            }}
-          >
-            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🌍</span>
-            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Headline News</span>
-          </div>
-          <div
-            className="fp-category-card"
-            style={{ padding: '0.6rem 0.3rem' }}
-            onClick={() => {
-              setSelectedCategory('popculture');
-              onReset();
-            }}
-          >
-            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🎬</span>
-            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Pop Culture</span>
-          </div>
-          <div
-            className="fp-category-card"
-            style={{ padding: '0.6rem 0.3rem' }}
-            onClick={() => {
-              setSelectedCategory('sports');
-              onReset();
-            }}
-          >
-            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🏆</span>
-            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Sports</span>
-          </div>
-          <div
-            className="fp-category-card"
-            style={{ padding: '0.6rem 0.3rem' }}
-            onClick={() => {
-              setSelectedCategory('technology');
-              onReset();
-            }}
-          >
-            <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>💻</span>
-            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Tech & Science</span>
+      {/* Play Another Edition or Overtime */}
+      {playedCategories && playedCategories.length >= 4 ? (
+        <div style={{ borderTop: '1px dashed var(--border-dashed)', paddingTop: '1.25rem', marginTop: '1.25rem', textAlign: 'center' }}>
+          <div className="fp-overtime-box" style={{ padding: '1rem', backgroundColor: 'var(--accent-gold-light)', borderRadius: 'var(--border-radius)', border: '1px solid var(--accent-gold)' }}>
+            <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '0.25rem' }}>🎓</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--accent-gold)', display: 'block', marginBottom: '0.25rem' }}>
+              Overtime Unlocked!
+            </span>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.75rem', lineHeight: '1.4' }}>
+              You have completed every news edition for today. Play the endless **Editor's Lexicon** to build your news vocabulary!
+            </p>
+            <button
+              type="button"
+              onClick={onLaunchLexicon}
+              className="fp-btn"
+              style={{ width: '100%', backgroundColor: 'var(--accent-gold)', color: 'var(--text-dark)', fontWeight: 800 }}
+            >
+              Play Editor's Lexicon ✍️
+            </button>
           </div>
         </div>
-      </div>
+      ) : (
+        <div style={{ borderTop: '1px dashed var(--border-dashed)', paddingTop: '1rem', marginTop: '1rem' }}>
+          <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.6rem' }}>
+            Play Another Edition
+          </span>
+          <div className="fp-category-grid" style={{ marginTop: '0.5rem', marginBottom: '0rem' }}>
+            <div
+              className="fp-category-card"
+              style={{ padding: '0.6rem 0.3rem' }}
+              onClick={() => {
+                setSelectedCategory('world');
+                onReset();
+              }}
+            >
+              <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🌍</span>
+              <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Headline News</span>
+            </div>
+            <div
+              className="fp-category-card"
+              style={{ padding: '0.6rem 0.3rem' }}
+              onClick={() => {
+                setSelectedCategory('popculture');
+                onReset();
+              }}
+            >
+              <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🎬</span>
+              <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Pop Culture</span>
+            </div>
+            <div
+              className="fp-category-card"
+              style={{ padding: '0.6rem 0.3rem' }}
+              onClick={() => {
+                setSelectedCategory('sports');
+                onReset();
+              }}
+            >
+              <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>🏆</span>
+              <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Sports</span>
+            </div>
+            <div
+              className="fp-category-card"
+              style={{ padding: '0.6rem 0.3rem' }}
+              onClick={() => {
+                setSelectedCategory('technology');
+                onReset();
+              }}
+            >
+              <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>💻</span>
+              <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Tech & Science</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showToast && (
         <div className="fp-toast">
           Scorecard copied to clipboard! 📋
         </div>
       )}
+    </div>
+  );
+}
+
+const VOCABULARY_WORDS = [
+  {
+    word: "Obfuscate",
+    definition: "To deliberately make something obscure, unclear, or unintelligible.",
+    distractors: [
+      "To reveal a hidden truth or expose a political scandal.",
+      "To organize news stories in a logical, chronological order.",
+      "To summarize a long article into a brief, easy-to-read headline."
+    ]
+  },
+  {
+    word: "Synecdoche",
+    definition: "A figure of speech in which a part is made to represent the whole.",
+    distractors: [
+      "A false statement published to damage a competitor's reputation.",
+      "A technical term for a printer jam in historic printing presses.",
+      "An anonymous tip received by an investigative journalist."
+    ]
+  },
+  {
+    word: "Demagogue",
+    definition: "A political leader who seeks support by appealing to popular desires rather than using rational argument.",
+    distractors: [
+      "A neutral reporter who covers international conflict zones.",
+      "A specialized device used to measure editorial page layouts.",
+      "An editor who reviews articles exclusively for spelling mistakes."
+    ]
+  },
+  {
+    word: "Mercurial",
+    definition: "Subject to sudden or unpredictable changes of mood or mind.",
+    distractors: [
+      "Slow, calculated, and extremely thorough in research.",
+      "Having a metallic texture typical of lead-based printing plates.",
+      "A type of column layout with equal spacing between columns."
+    ]
+  },
+  {
+    word: "Gerrymander",
+    definition: "Manipulating boundaries to favor one party or class.",
+    distractors: [
+      "Approving articles for printing without checking for facts.",
+      "Writing dramatic headlines that misrepresent the news content.",
+      "A fast-paced type of interview conducted with public officials."
+    ]
+  },
+  {
+    word: "Hegemony",
+    definition: "Leadership or dominance, especially by one country or social group over others.",
+    distractors: [
+      "A collaborative union formed by competing news organizations.",
+      "A system for dividing editorial roles in a digital newsroom.",
+      "A type of printer font popular in late 19th-century tabloids."
+    ]
+  },
+  {
+    word: "Spurious",
+    definition: "Not being what it purports to be; false or fake.",
+    distractors: [
+      "Highly creative and engaging in narrative style.",
+      "Urgent or requiring immediate publication in the evening edition.",
+      "Relating to chemical analysis of printing ink quality."
+    ]
+  },
+  {
+    word: "Obsequious",
+    definition: "Obedient or attentive to an excessive or servile degree.",
+    distractors: [
+      "Rude and dismissive toward editorial feedback.",
+      "Difficult to read due to outdated printing mechanics.",
+      "Highly analytical and objective in investigative reports."
+    ]
+  },
+  {
+    word: "Paucity",
+    definition: "The presence of something only in small or insufficient quantities; scarcity.",
+    distractors: [
+      "An abundance of sources confirming a news story.",
+      "The fast processing of print files on a layout machine.",
+      "A legal document protecting a journalist's source identity."
+    ]
+  },
+  {
+    word: "Sycophant",
+    definition: "A person who acts obsequiously toward someone important in order to gain advantage; a flatterer.",
+    distractors: [
+      "An editor who challenges the official government narrative.",
+      "A print technician who repairs large newspaper press rollers.",
+      "A fictional character created to write satirical reviews."
+    ]
+  },
+  {
+    word: "Cacophony",
+    definition: "A harsh, discordant mixture of sounds.",
+    distractors: [
+      "A pleasant and melodic harmony of voices.",
+      "The fast click-clack sound of a mechanical typewriter.",
+      "A technique for organizing paragraphs in news stories."
+    ]
+  },
+  {
+    word: "Recalcitrant",
+    definition: "Having an obstinately uncooperative attitude toward authority or discipline.",
+    distractors: [
+      "Very eager to help and follow editorial style guides.",
+      "Relating to old, recycled paper pulp used in newsprint.",
+      "Easily broken or torn under minor mechanical stress."
+    ]
+  },
+  {
+    word: "Capricious",
+    definition: "Given to sudden and unaccountable changes of mood or behavior.",
+    distractors: [
+      "Steady, reliable, and strictly adhering to deadlines.",
+      "Belonging to a traditional style of typography.",
+      "Highly logical and systematic in investigative audits."
+    ]
+  },
+  {
+    word: "Anachronism",
+    definition: "A thing belonging or appropriate to a period other than that in which it exists.",
+    distractors: [
+      "A modern digital editing tool used on old articles.",
+      "A system for measuring the speed of news transmission.",
+      "A secret agreement made between reporters and politicians."
+    ]
+  },
+  {
+    word: "Superfluous",
+    definition: "Unnecessary, especially through being more than enough.",
+    distractors: [
+      "Extremely important and critical for the front page layout.",
+      "Short and concise, fitting perfectly in narrow columns.",
+      "Written in an objective, neutral tone without adjectives."
+    ]
+  },
+  {
+    word: "Pernicious",
+    definition: "Having a harmful effect, especially in a gradual or subtle way.",
+    distractors: [
+      "Extremely helpful and beneficial to public understanding.",
+      "Fast-paced and exciting to read for early morning commuters.",
+      "Relating to a style of bold headers in classic papers."
+    ]
+  },
+  {
+    word: "Quixotic",
+    definition: "Exceedingly idealistic, unrealistic, and impractical.",
+    distractors: [
+      "Pragmatic, sensible, and focused on immediate results.",
+      "Pertaining to a quick response to breaking news alerts.",
+      "A type of ink that dries instantly upon printing."
+    ]
+  },
+  {
+    word: "Taciturn",
+    definition: "Reserved or uncommunicative in speech; saying little.",
+    distractors: [
+      "Very loud and chatty in busy newsrooms.",
+      "Expressing extreme emotion in personal editorial columns.",
+      "Pertaining to a type of mechanical typesetting machine."
+    ]
+  },
+  {
+    word: "Pugnacious",
+    definition: "Eager or quick to argue, quarrel, or fight.",
+    distractors: [
+      "Gentle, peaceful, and cooperative in team projects.",
+      "Relating to the design of funny cartoon illustrations.",
+      "Having a sharp, pleasant smell of freshly printed ink."
+    ]
+  },
+  {
+    word: "Surreptitious",
+    definition: "Kept secret, especially because it would not be approved of.",
+    distractors: [
+      "Widely broadcast and advertised across public media.",
+      "Relating to a official legal decree by the government.",
+      "Extremely fast and efficient at generating layout designs."
+    ]
+  }
+];
+
+function VocabularyGameScreen({ onExit }) {
+  const [score, setScore] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [maxStreak, setMaxStreak] = useState(0);
+  
+  const [wordData, setWordData] = useState(null);
+  const [options, setOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [gameState, setGameState] = useState('PLAYING');
+  
+  const loadNextWord = () => {
+    const randomWord = VOCABULARY_WORDS[Math.floor(Math.random() * VOCABULARY_WORDS.length)];
+    // Fisher-Yates shuffle array
+    const shuffleArray = (array) => {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    };
+    const allOptions = shuffleArray([randomWord.definition, ...randomWord.distractors]);
+    setWordData(randomWord);
+    setOptions(allOptions);
+    setSelectedOption(null);
+    setGameState('PLAYING');
+  };
+
+  useEffect(() => {
+    loadNextWord();
+  }, []);
+
+  const handleOptionClick = (option) => {
+    if (gameState !== 'PLAYING') return;
+    setSelectedOption(option);
+    setGameState('ANSWERED');
+    
+    if (option === wordData.definition) {
+      setScore(prev => prev + 100);
+      setStreak(prev => {
+        const next = prev + 1;
+        if (next > maxStreak) setMaxStreak(next);
+        return next;
+      });
+    } else {
+      setStreak(0);
+    }
+  };
+
+  if (!wordData) return null;
+
+  const isCorrect = selectedOption === wordData.definition;
+
+  return (
+    <div className="fp-card fp-form animate-fade-in" style={{ textAlign: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.75rem' }}>
+        <button 
+          onClick={onExit} 
+          className="fp-hint-link" 
+          style={{ fontSize: '0.75rem', fontWeight: 'bold' }}
+        >
+          ← Exit Lexicon
+        </button>
+        <div style={{ display: 'flex', gap: '1rem', fontSize: '0.7rem', fontWeight: 800 }}>
+          <span style={{ color: 'var(--accent-gold)' }}>SCORE: {score}</span>
+          <span style={{ color: 'var(--accent-blue)' }}>STREAK: 🔥 {streak} (Max: {maxStreak})</span>
+        </div>
+      </div>
+
+      <div style={{ margin: '1.5rem 0' }}>
+        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>
+          EDITOR'S LEXICON (ENDLESS)
+        </span>
+        <h2 className="fp-title-serif" style={{ fontSize: '2.2rem', letterSpacing: '0.02em', margin: '0.5rem 0' }}>
+          {wordData.word}
+        </h2>
+        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+          Identify the correct journalistic or literary definition below:
+        </p>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.5rem 0', textAlign: 'left' }}>
+        {options.map((opt) => {
+          let btnClass = "fp-btn fp-btn-action";
+          let style = { width: '100%', whiteSpace: 'normal', textAlign: 'left', lineHeight: '1.4', padding: '0.8rem 1rem' };
+          
+          if (gameState === 'ANSWERED') {
+            if (opt === wordData.definition) {
+              btnClass = "fp-btn fp-btn-emerald";
+            } else if (opt === selectedOption) {
+              btnClass = "fp-btn fp-btn-red";
+            } else {
+              style.opacity = 0.4;
+            }
+          }
+
+          return (
+            <button
+              key={opt}
+              type="button"
+              className={btnClass}
+              style={style}
+              disabled={gameState === 'ANSWERED'}
+              onClick={() => handleOptionClick(opt)}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+
+      {gameState === 'ANSWERED' && (
+        <div 
+          className="animate-fade-in"
+          style={{ 
+            padding: '1rem', 
+            borderRadius: 'var(--border-radius)', 
+            backgroundColor: isCorrect ? 'var(--accent-green-light)' : 'var(--accent-red-light)', 
+            color: isCorrect ? 'var(--accent-green)' : 'var(--accent-red)',
+            marginBottom: '1.5rem',
+            textAlign: 'left',
+            fontSize: '0.8rem',
+            lineHeight: '1.4',
+            border: `1px solid ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}`
+          }}
+        >
+          <strong>{isCorrect ? "Correct! 🎉" : "Incorrect. ❌"}</strong> {wordData.word} means: <em>"{wordData.definition}"</em>
+        </div>
+      )}
+
+      {gameState === 'ANSWERED' && (
+        <button
+          type="button"
+          onClick={loadNextWord}
+          className="fp-btn fp-btn-primary"
+          style={{ width: '100%', padding: '0.9rem' }}
+        >
+          Next Word →
+        </button>
+      )}
+    </div>
+  );
+}
+
+function CategoryTransitionScreen({ playedCategories, globalScore, onSelectCategory, onProceed }) {
+  const categoriesList = [
+    { key: 'world', label: 'Headline News', icon: '🌍' },
+    { key: 'popculture', label: 'Pop Culture', icon: '🎬' },
+    { key: 'sports', label: 'Sports', icon: '🏆' },
+    { key: 'technology', label: 'Tech & Science', icon: '💻' }
+  ];
+
+  const remainingCategories = categoriesList.filter(c => !playedCategories.includes(c.key));
+
+  return (
+    <div className="fp-card fp-form" style={{ textAlign: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <span style={{ fontSize: '2.5rem', display: 'block', margin: '0.5rem 0' }}>📰</span>
+        <h2 className="fp-title-serif" style={{ marginBottom: '0.25rem' }}>Section Compiled!</h2>
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+          You've successfully compiled this edition's wire reports.
+        </p>
+      </div>
+
+      <div className="fp-summary-score-box" style={{ margin: '1.5rem 0' }}>
+        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--accent-gold)', display: 'block', marginBottom: '0.25rem' }}>
+          Current Score
+        </span>
+        <div className="fp-summary-score-large" style={{ fontSize: '2rem' }}>
+          {globalScore} <span style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--text-muted)' }}>PTS</span>
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'left', marginBottom: '1.5rem' }}>
+        <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>
+          Compiled Sections ({playedCategories.length} / 4)
+        </span>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+          {categoriesList.map(c => {
+            const played = playedCategories.includes(c.key);
+            return (
+              <span
+                key={c.key}
+                className={`fp-badge ${played ? 'fp-badge-primary' : ''}`}
+                style={{ opacity: played ? 1 : 0.4 }}
+              >
+                {c.icon} {c.label} {played ? '✓' : ''}
+              </span>
+            );
+          })}
+        </div>
+      </div>
+
+      {remainingCategories.length > 0 ? (
+        <div style={{ borderTop: '1px dashed var(--border-dashed)', paddingTop: '1.25rem', marginTop: '1rem' }}>
+          <span style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-muted)', display: 'block', marginBottom: '0.75rem' }}>
+            Boost your Score! Add another section:
+          </span>
+          <div className="fp-category-grid" style={{ marginBottom: '1.25rem' }}>
+            {remainingCategories.map(c => (
+              <div
+                key={c.key}
+                className="fp-category-card"
+                onClick={() => onSelectCategory(c.key)}
+              >
+                <span className="fp-category-icon">{c.icon}</span>
+                <span className="fp-category-label">{c.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <p style={{ fontSize: '0.8rem', color: 'var(--accent-green)', fontWeight: 600, marginBottom: '1rem' }}>
+          🎉 Outstanding! You have completed every section for today's newspaper!
+        </p>
+      )}
+
+      <button
+        type="button"
+        onClick={onProceed}
+        className="fp-btn fp-btn-primary"
+        style={{ width: '100%', padding: '0.9rem' }}
+      >
+        Send to Fact-Check Audit →
+      </button>
     </div>
   );
 }
@@ -905,6 +1343,7 @@ export default function FrontPageDaily() {
   const [apiError, setApiError] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('world');
+  const [playedCategories, setPlayedCategories] = useState([]);
   
   const [currentScreen, setCurrentScreen] = useState('HUB'); // 'HUB', 'PHASE_1', 'PHASE_2', 'SUMMARY'
   const [difficulty, setDifficulty] = useState('HARD'); // 'EASY', 'HARD'
@@ -999,7 +1438,9 @@ export default function FrontPageDaily() {
     setIsLoading(true);
     setApiError(false);
     
-    fetch(`/api/daily-news?category=${selectedCategory}`)
+    const seenP2 = localStorage.getItem('fpd_seen_p2') || '[]';
+    
+    fetch(`/api/daily-news?category=${selectedCategory}&seenP2=${encodeURIComponent(seenP2)}`)
       .then((res) => {
         if (!res.ok) throw new Error('Network response not ok');
         return res.json();
@@ -1038,6 +1479,7 @@ export default function FrontPageDaily() {
   const resetGame = () => {
     setGlobalScore(0);
     setPerformanceLog({ phase1: [], phase2: [] });
+    setPlayedCategories([]);
     setCurrentScreen('HUB');
   };
 
@@ -1049,7 +1491,7 @@ export default function FrontPageDaily() {
     }));
 
     if (isLast) {
-      setCurrentScreen('PHASE_2');
+      setCurrentScreen('CATEGORY_TRANSITION');
     }
   };
 
@@ -1063,6 +1505,14 @@ export default function FrontPageDaily() {
 
   const handlePhase2Complete = () => {
     updateStatsAfterCompletion(globalScore);
+    try {
+      const seenP2 = JSON.parse(localStorage.getItem('fpd_seen_p2') || '[]');
+      const currentHeadlines = phase2Data.map(item => item.headline);
+      const updatedSeen = Array.from(new Set([...seenP2, ...currentHeadlines]));
+      localStorage.setItem('fpd_seen_p2', JSON.stringify(updatedSeen));
+    } catch (e) {
+      console.warn('Failed to save seen Fact/Fiction stories:', e);
+    }
     setCurrentScreen('SUMMARY');
   };
 
@@ -1101,7 +1551,10 @@ export default function FrontPageDaily() {
         <HubScreen
           difficulty={difficulty}
           setDifficulty={setDifficulty}
-          onStart={() => setCurrentScreen('PHASE_1')}
+          onStart={() => {
+            setPlayedCategories([selectedCategory]);
+            setCurrentScreen('PHASE_1');
+          }}
           onInstall={handleInstallClick}
           showInstallBtn={!!deferredPrompt}
           stats={stats}
@@ -1115,6 +1568,19 @@ export default function FrontPageDaily() {
           difficulty={difficulty}
           phase1Data={phase1Data}
           onStoryComplete={handlePhase1StoryComplete}
+        />
+      )}
+
+      {currentScreen === 'CATEGORY_TRANSITION' && (
+        <CategoryTransitionScreen
+          playedCategories={playedCategories}
+          globalScore={globalScore}
+          onSelectCategory={(cat) => {
+            setPlayedCategories(prev => [...prev, cat]);
+            setSelectedCategory(cat);
+            setCurrentScreen('PHASE_1');
+          }}
+          onProceed={() => setCurrentScreen('PHASE_2')}
         />
       )}
 
@@ -1134,6 +1600,14 @@ export default function FrontPageDaily() {
           onReset={resetGame}
           stats={stats}
           setSelectedCategory={setSelectedCategory}
+          playedCategories={playedCategories}
+          onLaunchLexicon={() => setCurrentScreen('VOCABULARY_GAME')}
+        />
+      )}
+
+      {currentScreen === 'VOCABULARY_GAME' && (
+        <VocabularyGameScreen
+          onExit={() => setCurrentScreen('SUMMARY')}
         />
       )}
     </div>

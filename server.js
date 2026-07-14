@@ -469,7 +469,7 @@ function shuffleArray(array) {
   return arr;
 }
 
-function getDailyPhase2(pool) {
+function getDailyPhase2(pool, seenHeadlines = []) {
   const date = new Date();
   const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   
@@ -479,13 +479,20 @@ function getDailyPhase2(pool) {
     hash = dateKey.charCodeAt(i) + ((hash << 5) - hash);
   }
   
+  // Filter pool to exclude already seen headlines
+  let availablePool = pool.filter(item => !seenHeadlines.includes(item.headline));
+  
+  // Fallback if all are seen: reset pool
+  if (availablePool.length < 3) {
+    availablePool = pool;
+  }
+  
   const selected = [];
-  const poolCopy = [...pool];
   
   // Pick 3 items using the hash
   for (let j = 0; j < 3; j++) {
-    const index = Math.abs(hash + j * 7) % poolCopy.length;
-    selected.push(poolCopy.splice(index, 1)[0]);
+    const index = Math.abs(hash + j * 7) % availablePool.length;
+    selected.push(availablePool.splice(index, 1)[0]);
   }
   
   return selected.map((item, idx) => ({
@@ -499,6 +506,14 @@ function getDailyPhase2(pool) {
 // ----------------------------------------------------
 app.get('/api/daily-news', async (req, res) => {
   const categoryParam = req.query.category || 'world';
+  let seenP2 = [];
+  try {
+    if (req.query.seenP2) {
+      seenP2 = JSON.parse(req.query.seenP2);
+    }
+  } catch (e) {
+    console.warn('[API] Failed to parse seenP2 param:', e.message);
+  }
   
   let rssUrl = 'http://feeds.bbci.co.uk/news/world/rss.xml';
   let targetFallback = FALLBACK_PHASE1;
@@ -587,8 +602,8 @@ app.get('/api/daily-news', async (req, res) => {
       }
     }
     
-    // Pick 3 Phase 2 Fact/Fiction items based on daily calendar seed
-    const selectedPhase2 = getDailyPhase2(PHASE2_POOL);
+    // Pick 3 Phase 2 Fact/Fiction items based on daily calendar seed, excluding seen ones
+    const selectedPhase2 = getDailyPhase2(PHASE2_POOL, seenP2);
     
     const dateString = new Date().toLocaleDateString('en-US', {
       month: 'long',
@@ -614,7 +629,7 @@ app.get('/api/daily-news', async (req, res) => {
     res.json({
       dateString,
       phase1: targetFallback,
-      phase2: getDailyPhase2(PHASE2_POOL)
+      phase2: getDailyPhase2(PHASE2_POOL, seenP2)
     });
   }
 });
