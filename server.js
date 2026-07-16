@@ -67,51 +67,51 @@ const FALLBACK_POPCULTURE = [
   {
     id: 1,
     category: "Pop Culture",
-    headlineTemplate: "DIRECTOR REVEALS PLANS FOR LATEST ______ EPIC AFTER DRAMATIC STUDIO BIDDING WAR",
+    headlineTemplate: "STEVEN SPIELBERG REVEALS PLANS FOR LATEST ______ EPIC AFTER DRAMATIC STUDIO BIDDING WAR",
     targetWord: "HOLLYWOOD",
     scrambled: "DOWYHOOLL",
     definition: "A neighborhood in Los Angeles, California, synonymous with the American film industry.",
-    wireSnippet: "The visionary filmmaker announced their highly anticipated sci-fi project today. Two major studios fought for the rights before a record-breaking deal was signed.",
+    wireSnippet: "The visionary filmmaker Steven Spielberg announced his highly anticipated sci-fi project today in Los Angeles. Universal and Warner Bros. fought for the rights before a record-breaking deal was signed.",
     wordBank: ["HOLLYWOOD", "BROADWAY", "SUNDANCE", "FESTIVAL", "CANNES"]
   },
   {
     id: 2,
     category: "Pop Culture",
-    headlineTemplate: "POP STAR DOMINATES THE ______ NOMINATIONS WITH SIX CATEGORY RECOGNITIONS",
+    headlineTemplate: "TAYLOR SWIFT DOMINATES THE ______ NOMINATIONS WITH SIX CATEGORY RECOGNITIONS",
     targetWord: "GRAMMYS",
     scrambled: "YSMGRMA",
     definition: "An award presented by the Recording Academy to recognize outstanding achievement in the music industry.",
-    wireSnippet: "The recording academy released the list of nominees this morning. The chart-topping singer is poised to sweep the major awards next month.",
+    wireSnippet: "The Recording Academy released the list of nominees this morning in New York. The chart-topping singer Taylor Swift is poised to sweep the major Grammy awards next month after her massive stadium tour success.",
     wordBank: ["GRAMMYS", "OSCARS", "EMMYS", "TONYS", "BAFTAS"]
   },
   {
     id: 3,
     category: "Pop Culture",
-    headlineTemplate: "SUPERHERO BLOCKBUSTER BREAKS ALL-TIME ______ OFFICE RECORDS IN OPENING WEEKEND",
+    headlineTemplate: "MARVELS AVENGERS BLOCKBUSTER BREAKS ALL-TIME ______ OFFICE RECORDS IN OPENING WEEKEND",
     targetWord: "BOX",
     scrambled: "XO",
     definition: "A container or device, or a reference to theater ticket sales.",
-    wireSnippet: "The latest comic book adaptation generated over $200 million domestically. Theater chains report unprecedented attendance and sold-out showings nationwide.",
+    wireSnippet: "The latest Marvel comic book adaptation generated over $200 million domestically this weekend. Theater chains report unprecedented attendance and sold-out showings nationwide.",
     wordBank: ["BOX", "TICKET", "SCREEN", "STAGE", "PRESS"]
   },
   {
     id: 4,
     category: "Pop Culture",
-    headlineTemplate: "LEGENDARY ROCK BAND ANNOUNCES GLOBAL CO-HEADLINING ______ DISMISSING RUMORS",
+    headlineTemplate: "FOO FIGHTERS ANNOUNCE GLOBAL CO-HEADLINING ______ TOUR DISMISSING RUMORS",
     targetWord: "STADIUM",
     scrambled: "MDIUTSA",
     definition: "A large closed area of land used for sports or musical performances.",
-    wireSnippet: "The rock veterans surprised fans with a 40-city stadium route announcement. Representatives confirmed that recent internal disputes have been fully resolved.",
+    wireSnippet: "Rock veterans Dave Grohl and the Foo Fighters surprised fans with a 40-city stadium route announcement today. Representatives confirmed that recent internal disputes have been fully resolved.",
     wordBank: ["STADIUM", "THEATER", "FESTIVAL", "REUNION", "RELEASE"]
   },
   {
     id: 5,
     category: "Pop Culture",
-    headlineTemplate: "CELEBRITY FASHION LINE COLLAPSES AFTER HIGH-PROFILE DESIGNS GO ______ ON SOCIALS",
+    headlineTemplate: "RIHANNA FENTY FASHION LINE COLLAPSES AFTER HIGH-PROFILE DESIGNS GO ______ ON SOCIALS",
     targetWord: "VIRAL",
     scrambled: "LRIVA",
     definition: "Image, video, piece of information, etc., that is circulated rapidly and widely from one internet user to another.",
-    wireSnippet: "The designer's collection received intense criticism for lack of original styling. Memes and parodies spread across platforms within hours of the runway reveal.",
+    wireSnippet: "Rihanna's luxury Fenty collection received intense criticism for lack of original styling. Memes and parodies spread across TikTok and Instagram within hours of the Paris runway reveal.",
     wordBank: ["VIRAL", "TRENDY", "CLONE", "FAMOUS", "ONLINE"]
   }
 ];
@@ -120,51 +120,51 @@ const FALLBACK_SPORTS = [
   {
     id: 1,
     category: "Sports",
-    headlineTemplate: "UNDERDOG TEAM SECURES HISTORIC CHAMPIONSHIP WIN IN EXTRA ______ TIME",
+    headlineTemplate: "KANSAS CITY CHIEFS SECURE HISTORIC PLAYOFF WIN IN EXTRA ______ TIME",
     targetWord: "PLAYOFF",
     scrambled: "FYOPFAL",
     definition: "An additional game, match, or series played to determine a winner.",
-    wireSnippet: "A late goal in extra time sealed the historic victory. The stadium erupted as the underdog team lifted the European cup.",
+    wireSnippet: "Patrick Mahomes threw a late touchdown pass in extra time today to seal the Chiefs' historic victory in Kansas City. The stadium erupted as the Chiefs lifted the Lamar Hunt trophy.",
     wordBank: ["PLAYOFF", "TIMEOUT", "HALFTIME", "QUARTER", "FINALS"]
   },
   {
     id: 2,
     category: "Sports",
-    headlineTemplate: "ATHLETES PREPARE FOR SUMMER ______ INDOOR AND OUTDOOR TRACK HEATS",
+    headlineTemplate: "SIMONE BILES PREPARES FOR PARIS ______ INDOOR GYMNASTIC HEATS AND FINALS",
     targetWord: "OLYMPICS",
     scrambled: "LPOIMSICY",
     definition: "A modern international sports event held every four years, with Summer and Winter games.",
-    wireSnippet: "Competitors from over 190 countries have checked into the athlete village. Security and logistics teams report full readiness for the opening ceremony.",
+    wireSnippet: "American gymnast Simone Biles checked into the athlete village in Paris this week. Team USA medical and coaching groups report full readiness for the opening ceremony heats.",
     wordBank: ["OLYMPICS", "ATHLETICS", "MARATHON", "TRIATHLON", "REGATTA"]
   },
   {
     id: 3,
     category: "Sports",
-    headlineTemplate: "STAR QUARTERBACK SIGNS RECORD-BREAKING FIVE-YEAR ______ WORTH $250 MILLION",
+    headlineTemplate: "PATRICK MAHOMES SIGNS RECORD-BREAKING FIVE-YEAR CHIEFS ______ WORTH $250 MILLION",
     targetWord: "CONTRACT",
     scrambled: "TORTCNAC",
     definition: "A written or spoken agreement, especially one concerning employment, sales, or tenancy.",
-    wireSnippet: "The franchise secured their star player long-term today. The deal includes full guarantees and signing bonuses that reset the market.",
+    wireSnippet: "The Kansas City Chiefs franchise secured quarterback Patrick Mahomes long-term today. The blockbuster deal includes full guarantees and signing bonuses that reset the NFL market.",
     wordBank: ["CONTRACT", "EXTENSION", "TRANSFER", "SALARY", "RELEASE"]
   },
   {
     id: 4,
     category: "Sports",
-    headlineTemplate: "CYCLING CHAMPION STRIPPED OF MEDAL FOLLOWING REVEALING DISCLOSURES IN ______ AUDITS",
+    headlineTemplate: "LANCE ARMSTRONG STRIPPED OF MEDALS FOLLOWING DOPING ______ DISCLOSURES",
     targetWord: "DOPING",
     scrambled: "GPNODI",
     definition: "The administration of drugs to an athlete to improve their performance.",
-    wireSnippet: "Anti-doping regulators announced the suspension this morning. The re-tested biological samples from last summer's tour revealed trace amounts of banned steroids.",
+    wireSnippet: "Cycling regulators stripped Lance Armstrong of his titles following revealing disclosures in anti-doping audits. Re-tested biological samples from previous races revealed trace amounts of banned steroids.",
     wordBank: ["DOPING", "TESTING", "MEDICAL", "ROSTER", "RECORD"]
   },
   {
     id: 5,
     category: "Sports",
-    headlineTemplate: "FORMULA ONE DRIVER DOMINATES THE RAIN-SLICKED MONACO ______ START TO FINISH",
+    headlineTemplate: "LEWIS HAMILTON DOMINATES THE RAIN-SLICKED MONACO ______ START TO FINISH",
     targetWord: "GRAND",
     scrambled: "AGRND",
     definition: "Magnificent and imposing in appearance, size, or style; or part of a major race name.",
-    wireSnippet: "Perfect tire strategy and masterclass wet-weather driving sealed the win. The reigning champion led all 78 laps in challenging conditions.",
+    wireSnippet: "Mercedes driver Lewis Hamilton executed a perfect tire strategy to win the Monaco Grand Prix today. The reigning champion led all 78 laps in challenging wet-weather conditions.",
     wordBank: ["GRAND", "CIRCUIT", "TROPHY", "PODIUM", "CHALLENGE"]
   }
 ];
@@ -172,52 +172,52 @@ const FALLBACK_SPORTS = [
 const FALLBACK_TECHNOLOGY = [
   {
     id: 1,
-    category: "Tech & Science",
-    headlineTemplate: "RESEARCHERS DEVELOP BIO-COMPATIBLE ______ CHIPS THAT INTEGRATE WITH LIVING TISSUE",
+    category: "AI Technology",
+    headlineTemplate: "OPENAI DEVELOP BIO-COMPATIBLE CHIP SET THAT INTEGRATES WITH LIVING ______ TISSUE",
     targetWord: "SILICON",
     scrambled: "NILOSCI",
     definition: "A chemical element used widely in semiconductor devices and microchips.",
-    wireSnippet: "The bio-hybrid interface represents a major leap in neural engineering. Microscopic electrodes successfully monitored neural firing rates without triggering immune responses.",
+    wireSnippet: "OpenAI's San Francisco team announced a bio-hybrid neural chip interface today. Microscopic silicon electrodes successfully monitored brain signals without triggering immune responses.",
     wordBank: ["SILICON", "GRAPHENE", "POLYMER", "METALLIC", "CELLULAR"]
   },
   {
     id: 2,
-    category: "Tech & Science",
-    headlineTemplate: "TECH GIANT ANNOUNCES CHATBOT INTEGRATED WITH DYNAMIC ______ VOICE AGENTS",
+    category: "AI Technology",
+    headlineTemplate: "GOOGLE CEO SUNDAR PICHAI ANNOUNCES CHATBOT INTEGRATED WITH DYNAMIC ______ AGENTS",
     targetWord: "ARTIFICIAL",
     scrambled: "TAFCIARILI",
     definition: "Made or produced by human beings rather than occurring naturally, typically as a copy of something natural.",
-    wireSnippet: "The new speech synthesis engine produces human-like inflection and conversational pauses, blurring the line between automated support and genuine human dialogue.",
+    wireSnippet: "Google CEO Sundar Pichai announced new artificial conversational agents this week. The updated speech engine produces human-like inflection and conversational pauses.",
     wordBank: ["ARTIFICIAL", "SYNTHETIC", "VIRTUAL", "AUTOMATED", "ROBOTIC"]
   },
   {
     id: 3,
-    category: "Tech & Science",
-    headlineTemplate: "QUANTUM COMPUTER SHATTERS TRADITIONAL ______ ENCRYPTION PROTOCOLS IN SECONDS",
+    category: "AI Technology",
+    headlineTemplate: "IBM QUANTUM COMPUTER SHATTERS TRADITIONAL ______ ENCRYPTION PROTOCOLS IN SECONDS",
     targetWord: "SECURITY",
     scrambled: "TCYERUSI",
     definition: "The state of being free from danger or threat; or protection of digital assets.",
-    wireSnippet: "Cybersecurity agencies have issued urgent updates. The 1000-qubit processor solved the factoring algorithm that protects modern web traffic in under four seconds.",
+    wireSnippet: "IBM cybersecurity scientists issued warning reports today. Their new 1000-qubit quantum processor cracked the security protocols protecting global bank servers in under four seconds.",
     wordBank: ["SECURITY", "PASSWORD", "DATABASE", "FIREWALL", "NETWORK"]
   },
   {
     id: 4,
-    category: "Tech & Science",
-    headlineTemplate: "ASTRONOMERS INTERCEPT REPETITIVE FAST RADIO ______ ORIGINATING IN DEEP SPACE",
+    category: "AI Technology",
+    headlineTemplate: "NASA ASTRONOMERS INTERCEPT REPETITIVE FAST RADIO ______ ORIGINATING IN DEEP SPACE",
     targetWord: "BURSTS",
     scrambled: "SRTSUB",
     definition: "An instance of breaking open or flying apart suddenly; or short signals.",
-    wireSnippet: "The deep space signal is repeating every 16 days with millisecond precision. Scientists are ruling out cosmic noise in favor of a magnetized neutron star magnetar.",
+    wireSnippet: "NASA astronomers intercepted repeating fast radio bursts originating in deep space this week. The signal repeats every 16 days, pointing to a highly magnetized star.",
     wordBank: ["BURSTS", "WAVES", "ECHOES", "PULSES", "BEAMS"]
   },
   {
     id: 5,
-    category: "Tech & Science",
-    headlineTemplate: "ELECTRIC VEHICLE MANUFACTURER DEPLOYS SOLID-STATE ______ WITH 800-MILE RANGE",
+    category: "AI Technology",
+    headlineTemplate: "TESLA MOTORS DEPLOYS SOLID-STATE ______ CHIPS WITH 800-MILE RANGE",
     targetWord: "BATTERY",
     scrambled: "TTEYBAM",
     definition: "A container consisting of one or more cells, in which chemical energy is converted into electricity and used as a source of power.",
-    wireSnippet: "The new energy density metric outperforms modern lithium-ion packs by double. Mass production lines are breaking ground in Ohio this summer.",
+    wireSnippet: "Elon Musk and Tesla Motors deployed a new solid-state battery chemistry for electric vehicles today. Mass production is set to break ground in Ohio to double the range of modern cars.",
     wordBank: ["BATTERY", "CHARGER", "MOTOR", "ENGINE", "TURBINE"]
   }
 ];
@@ -397,13 +397,7 @@ function synthesizeArticle(title, description) {
     { regex: /\bZelensky\b/gi, replacement: "The Foreign Leader" },
     { regex: /\bNetanyahu\b/gi, replacement: "The Representative" },
     { regex: /\bMacron\b/gi, replacement: "The Chief Executive" },
-    { regex: /\bPutin\b/gi, replacement: "The Sovereign" },
-    { regex: /\bBoeing\b/gi, replacement: "Aviation Giant" },
-    { regex: /\bApple\b/gi, replacement: "Tech Conglomerate" },
-    { regex: /\bMicrosoft\b/gi, replacement: "Software Leader" },
-    { regex: /\bGoogle\b/gi, replacement: "Search Pioneer" },
-    { regex: /\bMeta\b/gi, replacement: "Social Network" },
-    { regex: /\bTesla\b/gi, replacement: "EV Manufacturer" }
+    { regex: /\bPutin\b/gi, replacement: "The Sovereign" }
   ];
 
   for (const item of entityReplacements) {
@@ -571,7 +565,7 @@ app.get('/api/daily-news', async (req, res) => {
   let displayCategory = "Global News";
   
   if (categoryParam === 'popculture') {
-    rssUrl = 'https://www.tmz.com/rss.xml';
+    rssUrl = 'https://www.usmagazine.com/feed/';
     targetFallback = FALLBACK_POPCULTURE;
     displayCategory = "Pop Culture";
   } else if (categoryParam === 'sports') {
