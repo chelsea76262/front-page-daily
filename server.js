@@ -382,10 +382,44 @@ const WORDBANK_POOL = [
 // ----------------------------------------------------
 // 2. HELPER UTILITIES
 // ----------------------------------------------------
+function decodeHtmlEntities(text) {
+  if (!text) return "";
+  return text
+    .replace(/&amp;#8217;/g, "'")
+    .replace(/&#8217;/g, "'")
+    .replace(/&rsquo;/g, "'")
+    .replace(/&lsquo;/g, "'")
+    .replace(/&amp;#8216;/g, "'")
+    .replace(/&#8216;/g, "'")
+    .replace(/&amp;quot;/g, '"')
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;amp;/g, '&')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&#039;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
+    .replace(/&ldquo;/g, '"')
+    .replace(/&rdquo;/g, '"');
+}
+
 function synthesizeArticle(title, description) {
+  let decodedTitle = decodeHtmlEntities(title);
+  let decodedDesc = decodeHtmlEntities(description);
+
   // 1. Strip publisher names (trademark safety)
-  let cleanTitle = title.replace(/\b(BBC|AP|Reuters|Associated Press|CNN|Bloomberg|Fox|Guardian|New York Times|NYT)\b/gi, "Global Agency");
-  let cleanDesc = description.replace(/\b(BBC|AP|Reuters|Associated Press|CNN|Bloomberg|Fox|Guardian|New York Times|NYT)\b/gi, "reputable correspondents");
+  const newsOrgsRegex = /\b(BBC|AP|Reuters|Associated Press|CNN|Bloomberg|Fox|Guardian|New York Times|NYT|TMZ|US Weekly|Us Weekly|US Magazine|Yahoo|TechCrunch|Wired|People Magazine)\b/gi;
+  
+  let cleanTitle = decodedTitle.replace(newsOrgsRegex, "Global Agency");
+  let cleanDesc = decodedDesc.replace(newsOrgsRegex, "reputable correspondents");
+
+  // Replace standalone "Us" refers to the magazine
+  cleanTitle = cleanTitle.replace(/\bUs\b/g, "reputable journalists");
+  cleanDesc = cleanDesc.replace(/\bUs\b/g, "reputable journalists");
 
   // 2. Perform general entities replacement for common political/public names (copyright & brand safety)
   const entityReplacements = [
