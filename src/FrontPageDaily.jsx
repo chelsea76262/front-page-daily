@@ -94,7 +94,7 @@ function HubScreen({ difficulty, setDifficulty, onStart, onInstall, showInstallB
             onClick={() => setSelectedCategory('technology')}
           >
             <span className="fp-category-icon">💻</span>
-            <span className="fp-category-label">Tech & Science</span>
+            <span className="fp-category-label">AI Technology</span>
           </div>
         </div>
       </div>
@@ -886,7 +886,7 @@ Play at Front Page Daily!`;
             }}
           >
             <span className="fp-category-icon" style={{ fontSize: '1.2rem' }}>💻</span>
-            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>Tech & Science</span>
+            <span className="fp-category-label" style={{ fontSize: '0.65rem' }}>AI Technology</span>
           </div>
         </div>
       </div>
@@ -1350,14 +1350,15 @@ function VocabularyGameScreen({ onExit, onAwardPoints }) {
             style={{ 
               fontSize: '0.75rem', 
               padding: '0.4rem 0.8rem', 
-              backgroundColor: removalsLeft > 0 ? 'var(--accent-red-light)' : 'var(--bg-page)', 
-              color: removalsLeft > 0 ? 'var(--accent-red)' : 'var(--text-muted)', 
-              border: `1px solid ${removalsLeft > 0 ? 'var(--accent-red)' : 'var(--border-subtle)'}`,
+              backgroundColor: removalsLeft > 0 ? 'var(--accent-red-light)' : '#e0e0e0', 
+              color: removalsLeft > 0 ? 'var(--accent-red)' : '#888888', 
+              border: `1px solid ${removalsLeft > 0 ? 'var(--accent-red)' : '#cccccc'}`,
               borderRadius: '20px',
-              fontWeight: 800
+              fontWeight: 800,
+              cursor: removalsLeft > 0 ? 'pointer' : 'not-allowed'
             }}
           >
-            ✂️ remove a choice ({removalsLeft} left)
+            remove a choice
           </button>
         </div>
       )}
@@ -1400,7 +1401,7 @@ function CategoryTransitionScreen({ playedCategories, globalScore, onSelectCateg
     { key: 'world', label: 'Headline News', icon: '🌍' },
     { key: 'popculture', label: 'Pop Culture', icon: '🎬' },
     { key: 'sports', label: 'Sports', icon: '🏆' },
-    { key: 'technology', label: 'Tech & Science', icon: '💻' }
+    { key: 'technology', label: 'AI Technology', icon: '💻' }
   ];
 
   const remainingCategories = categoriesList.filter(c => !playedCategories.includes(c.key));
@@ -1490,6 +1491,7 @@ export default function FrontPageDaily() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('world');
   const [playedCategories, setPlayedCategories] = useState([]);
+  const [sessionSeenP1, setSessionSeenP1] = useState([]);
   
   const [currentScreen, setCurrentScreen] = useState('HUB'); // 'HUB', 'PHASE_1', 'PHASE_2', 'SUMMARY'
   const [difficulty, setDifficulty] = useState('HARD'); // 'EASY', 'HARD'
@@ -1585,8 +1587,9 @@ export default function FrontPageDaily() {
     setApiError(false);
     
     const seenP2 = localStorage.getItem('fpd_seen_p2') || '[]';
+    const seenP1Param = JSON.stringify(sessionSeenP1);
     
-    fetch(`/api/daily-news?category=${selectedCategory}&seenP2=${encodeURIComponent(seenP2)}`)
+    fetch(`/api/daily-news?category=${selectedCategory}&seenP2=${encodeURIComponent(seenP2)}&seenP1=${encodeURIComponent(seenP1Param)}`)
       .then((res) => {
         if (!res.ok) throw new Error('Network response not ok');
         return res.json();
@@ -1594,6 +1597,10 @@ export default function FrontPageDaily() {
       .then((data) => {
         if (active) {
           setGameData(data);
+          if (data && data.phase1) {
+            const targets = data.phase1.map(item => item.targetWord);
+            setSessionSeenP1(prev => Array.from(new Set([...prev, ...targets])));
+          }
           setIsLoading(false);
         }
       })

@@ -391,7 +391,7 @@ function synthesizeArticle(title, description) {
   const entityReplacements = [
     { regex: /\bBiden\b/gi, replacement: "The President" },
     { regex: /\bHarris\b/gi, replacement: "The Vice President" },
-    { regex: /\bTrump\b/gi, replacement: "The Candidate" },
+    { regex: /\bTrump\b/gi, replacement: "President Trump" },
     { regex: /\bStarmer\b/gi, replacement: "The Prime Minister" },
     { regex: /\bSunak\b/gi, replacement: "The Leader" },
     { regex: /\bZelensky\b/gi, replacement: "The Foreign Leader" },
@@ -548,6 +548,8 @@ function getDailyPhase2(pool, seenHeadlines = []) {
 app.get('/api/daily-news', async (req, res) => {
   const categoryParam = req.query.category || 'world';
   let seenP2 = [];
+  let seenP1 = [];
+  
   try {
     if (req.query.seenP2) {
       seenP2 = JSON.parse(req.query.seenP2);
@@ -555,23 +557,31 @@ app.get('/api/daily-news', async (req, res) => {
   } catch (e) {
     console.warn('[API] Failed to parse seenP2 param:', e.message);
   }
+
+  try {
+    if (req.query.seenP1) {
+      seenP1 = JSON.parse(req.query.seenP1);
+    }
+  } catch (e) {
+    console.warn('[API] Failed to parse seenP1 param:', e.message);
+  }
   
   let rssUrl = 'http://feeds.bbci.co.uk/news/world/rss.xml';
   let targetFallback = FALLBACK_PHASE1;
   let displayCategory = "Global News";
   
   if (categoryParam === 'popculture') {
-    rssUrl = 'http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml';
+    rssUrl = 'https://www.tmz.com/rss.xml';
     targetFallback = FALLBACK_POPCULTURE;
     displayCategory = "Pop Culture";
   } else if (categoryParam === 'sports') {
-    rssUrl = 'http://feeds.bbci.co.uk/sport/rss.xml';
+    rssUrl = 'https://sports.yahoo.com/top/rss.xml';
     targetFallback = FALLBACK_SPORTS;
     displayCategory = "Sports";
   } else if (categoryParam === 'technology') {
-    rssUrl = 'http://feeds.bbci.co.uk/news/technology/rss.xml';
+    rssUrl = 'https://techcrunch.com/category/artificial-intelligence/feed/';
     targetFallback = FALLBACK_TECHNOLOGY;
-    displayCategory = "Tech & Science";
+    displayCategory = "AI Technology";
   }
 
   try {
@@ -605,6 +615,12 @@ app.get('/api/daily-news', async (req, res) => {
       // Clean title from basic noise
       if (title.toLowerCase().includes('in pictures') || title.toLowerCase().includes('video:') || title.toLowerCase().includes('pictures:')) {
         continue; 
+      }
+
+      // Do not repeat stories from another category
+      const targetCheck = extractTargetWord(title);
+      if (seenP1.includes(title) || seenP1.includes(targetCheck) || seenP1.some(seen => title.toUpperCase().includes(seen.toUpperCase()))) {
+        continue;
       }
       
       // Limit death-related stories to at most one per session
